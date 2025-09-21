@@ -227,10 +227,10 @@ if (isPWAInstalled()) {
 
     if (!isStandalone) {
       // PWA install nahi hua → button show karo
-      document.getElementById('openAppBtn').style.display = 'block';
+      document.getElementById('openAppBtn').style.display = 'none';
     } else {
       // PWA already installed → button hide
-      document.getElementById('openAppBtn').style.display = 'none';
+      document.getElementById('openAppBtn').style.display = 'block';
     }
   }
 
