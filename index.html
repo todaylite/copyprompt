@@ -192,7 +192,31 @@ window.addEventListener('appinstalled', () => {
 
 
 
+<script>
+// Detect browser
+function isChrome() {
+  const ua = navigator.userAgent;
+  return /Chrome/.test(ua) && !/Edg|OPR|SamsungBrowser/.test(ua);
+}
 
+window.addEventListener('DOMContentLoaded', () => {
+  const body = document.body;
+
+  if (!isChrome()) {
+    // Clear body content and show message
+    body.innerHTML = `
+      <div style="height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; font-family:sans-serif;">
+        <h2>Please open this website in <span style="color:#4285F4">Chrome</span> browser for best experience!</h2>
+        <p style="margin-top:20px; font-size:16px;">You can copy this link and open in Chrome.</p>
+        <a href="https://www.google.com/chrome/" target="_blank" style="margin-top:20px; padding:10px 20px; background:#4285F4; color:white; border-radius:5px; text-decoration:none;">Download Chrome</a>
+      </div>
+    `;
+  } else {
+    // Chrome me original content dikhaye
+    document.getElementById('heroSection').style.display = 'block';
+  }
+});
+</script>
 
 
   
