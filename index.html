@@ -14,8 +14,57 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="style.css">
-  <style>
-    button {
+    <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: Arial, sans-serif;
+    }
+
+    /* ðŸ”¹ Full screen background image */
+    .hero {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      
+    }
+    .hero img{
+object-fit: cover;
+    object-position: center 30%; /* horizontal center, vertical 30% */
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+    /* ðŸ”¹ Overlay for text */
+    .overlay {
+      position: absolute;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      text-align: center;
+    }
+
+    .overlay h1 {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.7);
+    }
+
+    /* ðŸ”¹ Button */
+    .overlay button {
       padding: 12px 28px;
       font-size: 16px;
       font-weight: bold;
@@ -45,14 +94,53 @@
       box-shadow: 0 0 10px #ff6600, 0 0 20px #ff6600, 0 0 30px #ff6600;
     }
   }
+  
+  
+  .create-imgedit-button1{
+position: relative;
+height:40px;
+width:150px;
+background: linear-gradient(to left, orange -14%,pink 68%);
+  outline:none;
+  border:0.1px solid white;
+  padding:8px;
+  border-radius:50px 50px 50px 50px;
+  transition:0.5s;
+  color: black;
+  display:block;
+  box-shadow:6px 6px 10px -1px  rgba(0,0,0,0.15),
+-6px -6px 10px -1px  rgba(255,255,255,0.0);
+      transition:1s;
+animation:subbtnanim  3s infinite;
+}
+@keyframes subbtnanim{
+
+  0%{
+    -moz-box-shadow: 0 0 0 0 rgba(0,0,0, 0.4);
+    box-shadow: 0 0 0 0 rgba(0,0,0, 0.4);
+    
+  }
+  70% {
+      -moz-box-shadow: 0 0 0 10px rgba(255, 165, 0, 0);
+      box-shadow: 0 0 0 10px rgba(0,0,255, 0);
+  }
+  100% {
+      -moz-box-shadow: 0 0 0 0 rgba(255, 165, 0, 0);
+      box-shadow: 0 0 0 0 rgba(0,0,255, 0);
+  fortransm:scale(1);}}
+
   </style>
 </head>
 <body>
-  
-<img src="">
-  <button id="installBtn" style="display:none;background:white;border-radius:20px;color:black;">Install App</button>
+    <div class="hero">
+  	<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi5ajVuCqhiOMkS1Y24LOJbFvDI5oKVIWSIszuv2ln9bbMa22ok4Hyx5tej5e_gB-1e8ED18g1lJfGEYzVh8k7GawHZsFsOKg-7MS_hTdFk1oA_bkSaAq-aAZXsNfTipxf4Y686NLIIgxn_acoGHaiqXZvvyZbR2kFkgQsnJdaRl_51TuP2dhVQPx9V0ZE/s1600/Banner-copypromt_20250921_110520_0000.jpg" style="position:absolute;width:100%;height:auto;">
+    <div class="overlay">
+      <h1>COPY PROMPT IDEAS INSTANTLY!</h1>
+      <button id="installBtn">INSTALL APP</button>
+    </div>
+    </div>
 
-  <script>
+   <script>
     let deferredPrompt;
     const installBtn = document.getElementById('installBtn');
 
