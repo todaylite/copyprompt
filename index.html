@@ -202,6 +202,19 @@ window.addEventListener('appinstalled', () => {
   window.location.href = "https://eloanwarehouse.blogspot.com/p/pinterest-style-gallery.html";
 });
 </script>
-   
+
+<script>
+// Check if PWA is already installed
+function isPWAInstalled() {
+  return window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
+}
+
+// Redirect if installed
+if (isPWAInstalled()) {
+  window.location.href = "https://eloanwarehouse.blogspot.com/p/pinterest-style-gallery.html";
+}
+</script>
+
+  
 </body>
 </html>
