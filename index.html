@@ -168,50 +168,18 @@ animation:subbtnanim  3s infinite;
   }
 </style>
 
-<script>
-// Detect if PWA already installed
-function isInstalled() {
-  // For iOS
-  if (window.navigator.standalone) return true;
-  // For other browsers / Chrome
-  if (window.matchMedia('(display-mode: standalone)').matches) return true;
-  return false;
-}
 
-// Redirect if already installed
-if (isInstalled()) {
-  window.location.href = "https://eloanwarehouse.blogspot.com/p/copyprompt-app.html";
-}
 
-// Existing beforeinstallprompt logic
-let deferredPrompt;
-const installBtn = document.getElementById('installBtn');
 
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  installBtn.style.display = 'inline-block'; // Show button
-});
+ 
 
-installBtn.addEventListener('click', async () => {
-  if (!deferredPrompt) return;
-  deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
-  if (outcome === 'accepted') {
-    console.log('User accepted the install prompt');
-    window.location.href = "https://eloanwarehouse.blogspot.com/p/copyprompt-app.html";
-  } else {
-    console.log('User dismissed the install prompt');
-  }
-  installBtn.style.display = 'none';
-  deferredPrompt = null;
-});
 
-window.addEventListener('appinstalled', () => {
-  console.log('PWA installed successfully!');
-  window.location.href = "https://todaylite.github.io/copyprompt/open-in-app.html";
-});
-</script>
+  
+
+
+
+<!-- Open App Button -->
+<button id="openBtn" style="display:none;">OPEN APP</button>
 
 <script>
 // Check if PWA is already installed
@@ -219,21 +187,22 @@ function isPWAInstalled() {
   return window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
 }
 
-// Redirect if installed
+// Try auto-redirect
 if (isPWAInstalled()) {
-  window.location.href = "https://eloanwarehouse.blogspot.com/p/copyprompt-app.html";
+  // Try redirect
+  setTimeout(() => {
+    window.location.href = "https://eloanwarehouse.blogspot.com/p/copyprompt-app.html";
+  }, 100); // slight delay in case browser blocks immediate redirect
+
+  // Show OPEN button as fallback
+  const openBtn = document.getElementById('openBtn');
+  openBtn.style.display = 'inline-block';
+  openBtn.addEventListener('click', () => {
+    window.location.href = "https://eloanwarehouse.blogspot.com/p/copyprompt-app.html";
+  });
 }
 </script>
 
-
-
- 
-<script>
-// Check if PWA is installed
-if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
-  document.getElementById("pwa-link").style.display = "block";
-}
-</script>
 
   
 </body>
