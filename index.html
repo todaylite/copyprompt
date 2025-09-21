@@ -143,8 +143,18 @@ animation:subbtnanim  3s infinite;
     <div class="hero">
   	<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi5ajVuCqhiOMkS1Y24LOJbFvDI5oKVIWSIszuv2ln9bbMa22ok4Hyx5tej5e_gB-1e8ED18g1lJfGEYzVh8k7GawHZsFsOKg-7MS_hTdFk1oA_bkSaAq-aAZXsNfTipxf4Y686NLIIgxn_acoGHaiqXZvvyZbR2kFkgQsnJdaRl_51TuP2dhVQPx9V0ZE/s1600/Banner-copypromt_20250921_110520_0000.jpg">
     <div class="overlay">
-      <a href="https://eloanwarehouse.blogspot.com/p/copyprompt-app.html"><h1>COPY PROMPT IDEAS INSTANTLY!</h1></a>
-      <button id="installBtn">INSTALL APP2</button>
+      <h1>COPY PROMPT IDEAS INSTANTLY!</h1>
+      <button id="installBtn">INSTALL APP</button>
+
+      
+      <a href="https://eloanwarehouse.blogspot.com/p/copyprompt-app.html" id="pwa-link" style="display:none;">
+  <h1>Akshy</h1>
+</a>
+
+
+
+
+      
     </div>
     </div>
 <div id="heroSection" style="display:none;">
@@ -218,6 +228,12 @@ if (isPWAInstalled()) {
 
 
  
+<script>
+// Check if PWA is installed
+if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+  document.getElementById("pwa-link").style.display = "block";
+}
+</script>
 
   
 </body>
