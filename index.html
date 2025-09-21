@@ -218,32 +218,6 @@ if (isPWAInstalled()) {
 
 
  
-<button id="openAppBtn" style="display:none;position:fixed;top:20px;left:50px;">Open App</button>
-
-<script>
-  function checkPWA() {
-    // Chrome & modern browsers
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-
-    if (!isStandalone) {
-      // PWA install nahi hua → button show karo
-      document.getElementById('openAppBtn').style.display = 'none';
-    } else {
-      // PWA already installed → button hide
-      document.getElementById('openAppBtn').style.display = 'block';
-    }
-  }
-
-  // Page load pe check karo
-  window.addEventListener('load', checkPWA);
-
-  // Button click event
-  document.getElementById('openAppBtn').addEventListener('click', () => {
-    // Yahan app open ya redirect karne ka code dal sakte ho
-    alert('Open App clicked!');
-  });
-</script>
-  
 
   
 </body>
