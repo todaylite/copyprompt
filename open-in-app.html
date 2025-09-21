@@ -151,55 +151,23 @@ animation:subbtnanim  3s infinite;
   <!-- Hero image + overlay + install button yaha -->
 </div>
 
-
-<style>
-  #installBtn {
-    display: none; /* Initially hidden */
-  }
-</style>
+<button id="openChromeBtn">Open in Chrome</button>
 
 <script>
-// Detect if PWA already installed
-function isInstalled() {
-  // For iOS
-  if (window.navigator.standalone) return true;
-  // For other browsers / Chrome
-  if (window.matchMedia('(display-mode: standalone)').matches) return true;
-  return false;
-}
+document.getElementById('openChromeBtn').addEventListener('click', function() {
+    // URL jise Chrome me kholna hai
+    var url = "https://www.example.com";
 
-// Redirect if already installed
-if (isInstalled()) {
-  window.location.href = "https://eloanwarehouse.blogspot.com/p/pinterest-style-gallery.html";
-}
+    // Android ke liye intent URL
+    var chromeIntent = "intent://" + url.replace(/^https?:\/\//,'') + "#Intent;package=com.android.chrome;scheme=https;end";
 
-// Existing beforeinstallprompt logic
-let deferredPrompt;
-const installBtn = document.getElementById('installBtn');
+    // Try open Chrome
+    window.location = chromeIntent;
 
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  installBtn.style.display = 'inline-block'; // Show button
-});
-
-installBtn.addEventListener('click', async () => {
-  if (!deferredPrompt) return;
-  deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
-  if (outcome === 'accepted') {
-    console.log('User accepted the install prompt');
-    window.location.href = "https://eloanwarehouse.blogspot.com/p/pinterest-style-gallery.html";
-  } else {
-    console.log('User dismissed the install prompt');
-  }
-  installBtn.style.display = 'none';
-  deferredPrompt = null;
-});
-
-window.addEventListener('appinstalled', () => {
-  console.log('PWA installed successfully!');
-  window.location.href = "https://eloanwarehouse.blogspot.com/p/pinterest-style-gallery.html";
+    // Agar fail ho jaye to alert
+    setTimeout(function() {
+        alert("Open in Chrome app .");
+    }, 1500);
 });
 </script>
    
