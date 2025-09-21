@@ -1,6 +1,6 @@
 {
-  "name": "Copyprompt App",
-  "short_name": "CopyPrompt",
+  "name": "My PWA App",
+  "short_name": "Copy Prompt",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#000000",
