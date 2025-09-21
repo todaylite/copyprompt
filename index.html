@@ -148,35 +148,54 @@ animation:subbtnanim  3s infinite;
     </div>
     </div>
 
-   <script>
-    let deferredPrompt;
-    const installBtn = document.getElementById('installBtn');
 
-    // Listen for beforeinstallprompt
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      installBtn.style.display = 'block';
 
-      installBtn.addEventListener('click', async () => {
-        installBtn.style.display = 'none';
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        if (outcome === 'accepted') {
-          console.log('User accepted the install prompt');
-        } else {
-          console.log('User dismissed the install prompt');
-        }
-        deferredPrompt = null;
-      });
-    });
+<style>
+  #installBtn {
+    display: none; /* Initially hidden */
+  }
+</style>
 
-    // Listen for appinstalled event
-    window.addEventListener('appinstalled', () => {
-      console.log('PWA installed successfully!');
-      // Redirect after successful install
-      window.location.href = "https://eloanwarehouse.blogspot.com/p/pinterest-style-gallery.html";
-    });
-  </script>
+<script>
+let deferredPrompt;
+const installBtn = document.getElementById('installBtn');
+
+// Listen for beforeinstallprompt
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installBtn.style.display = 'inline-block'; // Show button
+
+});
+
+// Listen for button click outside the event
+installBtn.addEventListener('click', async () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  if (outcome === 'accepted') {
+    console.log('User accepted the install prompt');
+  } else {
+    console.log('User dismissed the install prompt');
+  }
+  installBtn.style.display = 'none'; // Hide after click
+  deferredPrompt = null;
+});
+
+// Optional: listen for appinstalled
+window.addEventListener('appinstalled', () => {
+  console.log('PWA installed successfully!');
+  // Redirect after install
+  window.location.href = "https://eloanwarehouse.blogspot.com/p/pinterest-style-gallery.html";
+});
+</script>
+
+
+
+
+
+
+  
+   
 </body>
 </html>
