@@ -14,12 +14,43 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="style.css">
+  <style>
+    button {
+      padding: 12px 28px;
+      font-size: 16px;
+      font-weight: bold;
+      border:1px solid white;
+      border-radius: 25px;
+      background: linear-gradient(to left, orange -14%,pink 68%);
+      color:white;
+      cursor: pointer;
+      transition: 0.3s;
+      animation:subbtnanim  3s infinite;
+    }
+
+    .overlay button:hover {
+      background: #f1c40f;
+      color: black;
+    }
+    
+    
+    @keyframes pulseShadow {
+    0% {
+      box-shadow: 0 0 10px #ff6600, 0 0 20px #ff6600, 0 0 30px #ff6600;
+    }
+    50% {
+      box-shadow: 0 0 20px #ff9900, 0 0 30px #ff9900, 0 0 40px #ff9900;
+    }
+    100% {
+      box-shadow: 0 0 10px #ff6600, 0 0 20px #ff6600, 0 0 30px #ff6600;
+    }
+  }
+  </style>
 </head>
 <body>
-  <h1>🚀 Welcome to My PWA COPYPROMPT</h1>
-  <p>This is a Progressive Web App hosted on GitHub Pages.</p>
-
-  <button id="installBtn" style="display:none;">Install App</button>
+  
+<img src="">
+  <button id="installBtn" style="display:none;background:white;border-radius:20px;color:black;">Install App</button>
 
   <script>
     let deferredPrompt;
