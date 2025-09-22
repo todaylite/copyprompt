@@ -1,6 +1,22 @@
 <!doctype html>
 <html lang="en">
 <head>
+   <!-- Google tag (gtag.js) -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-189M5X01BR"></script>
+
+<script>
+
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag(){dataLayer.push(arguments);}
+
+  gtag('js', new Date());
+
+  gtag('config', 'G-189M5X01BR');
+
+</script>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>COPYPROMPT APP</title>
@@ -24,10 +40,89 @@ button { padding:12px 28px; font-size:16px; font-weight:bold; border-radius:25px
   <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi5ajVuCqhiOMkS1Y24LOJbFvDI5oKVIWSIszuv2ln9bbMa22ok4Hyx5tej5e_gB-1e8ED18g1lJfGEYzVh8k7GawHZsFsOKg-7MS_hTdFk1oA_bkSaAq-aAZXsNfTipxf4Y686NLIIgxn_acoGHaiqXZvvyZbR2kFkgQsnJdaRl_51TuP2dhVQPx9V0ZE/s1600/Banner-copypromt_20250921_110520_0000.jpg">
   <div class="overlay">
     <h1>COPY PROMPT IDEAS INSTANTLY!</h1>
-    <button id="installBtn">INSTALL APP</button>
+    <button id="installBtn">INSTALL APP(<span id="shareCount">0</span>)</button>
     <button id="openBtn">OPEN APP</button>
   </div>
 </div>
+
+
+
+<!-- capture count button start  -->
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+
+
+<script>
+
+  const firebaseConfig = {
+
+    apiKey: "AIzaSyCvS35O-TEWh7YBA28sXa1VEzozwOYR6Y4",
+
+    authDomain: "todaylite-github-share.firebaseapp.com",
+
+    databaseURL: "https://todaylite-github-share-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+    projectId: "todaylite-github-share",
+
+    storageBucket: "todaylite-github-share.firebasestorage.app",
+
+    messagingSenderId: "149613187050",
+
+    appId: "1:149613187050:web:87e2e35d4e76924ceaac93",
+
+    measurementId: "G-KD18PK3VBZ"
+
+  };
+
+  firebase.initializeApp(firebaseConfig);
+
+  const db = firebase.database();
+
+  // Unique article id based on URL path
+
+  const articleId = window.location.pathname
+
+    .replace(/\//g, "-")
+
+    .substring(1)
+
+    .replace(/\.[^/.]+$/, "") || "default-article";
+
+  console.log("Article ID:", articleId);
+
+  const shareCountRef = db.ref("shares/" + articleId);
+
+  shareCountRef.on("value", snapshot => {
+
+    const count = snapshot.val() || 0;
+
+    document.getElementById("shareCount").textContent = count;
+
+  });
+
+  document.getElementById("installBtn").addEventListener("click", () => {
+
+    shareCountRef.transaction(current => (current || 0) + 1);
+
+  });
+
+</script>
+
+
+
+
+
+
+(<span id="shareCount">0</span>)
+
+
+
+
+
+  
+  
 
 <script>
 const installBtn = document.getElementById("installBtn");
