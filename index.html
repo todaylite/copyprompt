@@ -137,6 +137,24 @@ animation:subbtnanim  3s infinite;
       box-shadow: 0 0 0 0 rgba(0,0,255, 0);
   fortransm:scale(1);}}
 
+
+
+  #openBtn {
+      display: none; /* default hidden */
+      padding: 15px 30px;
+      font-size: 18px;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      background: linear-gradient(to right, #ff6a00, #ee0979);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+    #openBtn:hover {
+      transform: scale(1.05);
+    }
+      
   </style>
 </head>
 <body>
@@ -145,7 +163,7 @@ animation:subbtnanim  3s infinite;
     <div class="overlay">
       <h1>COPY PROMPT IDEAS INSTANTLY!</h1>
       <button id="installBtn">INSTALL APP</button>
-
+<button id="openBtn" onclick="openInApp()">Open in App</button>
       
       <a href="https://eloanwarehouse.blogspot.com/p/copyprompt-app.html" id="pwa-link" style="display:none;">
   <h1>Akshy</h1>
@@ -219,6 +237,31 @@ window.addEventListener('appinstalled', () => {
 
   
 
+
+  <script>
+    // Detect if running inside installed PWA
+    function isInStandaloneMode() {
+      return (window.matchMedia('(display-mode: standalone)').matches) 
+          || (window.navigator.standalone === true);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const btn = document.getElementById("openBtn");
+
+      if (isInStandaloneMode()) {
+        // Already inside PWA app → hide button
+        btn.style.display = "none";
+      } else {
+        // Opened in browser → show button
+        btn.style.display = "block";
+      }
+    });
+
+    function openInApp() {
+      // App open karne ke liye apna PWA url ya deep link use karo
+      window.location.href = "https://todaylite.github.io/copyprompt/index.html";
+    }
+  </script>
 
 
   
