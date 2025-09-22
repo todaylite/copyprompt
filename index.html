@@ -167,7 +167,10 @@ animation:subbtnanim  3s infinite;
 </div>
 
       <!-- Sirf ek hi button rakho -->
-  <button id="btnOpenAppCustom">Open in App</button>
+  <button id="btnOpenAppCustom" style="display:none;padding:12px 24px;font-size:16px;font-weight:bold;color:#fff;border:none;border-radius:30px;cursor:pointer;background:linear-gradient(to right,#ff6a00,#ee0979);box-shadow:0 4px 10px rgba(0,0,0,0.2);">
+  Open in App
+</button>
+
 </div>
     </div>
       
@@ -183,35 +186,28 @@ animation:subbtnanim  3s infinite;
   <!-- Hero image + overlay + install button yaha -->
 </div>
 
-
-
- <!-- Sirf open button ek hi button rakho -->
+<!-- Open in App Button -->
 
 <script>
 (function() {
-    const btn = document.getElementById('btnOpenAppCustom');
-    const targetURL = "https://eloanwarehouse.blogspot.com";
-    const currentURL = window.location.href;
+  const openBtn = document.getElementById('btnOpenAppCustom');
+  const currentURL = window.location.href;
+  const targetURL = "https://eloanwarehouse.blogspot.com";
 
-    // Default hidden
-    btn.style.display = "none";
+  // Detect agar PWA me chal raha hai
+  const isPWA = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 
-    // Detect agar PWA me open hai
-    const isPWA = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  // Agar browser me ho aur sahi page pe ho to button show
+  if(!isPWA && currentURL === "https://todaylite.github.io/copyprompt/index.html") {
+    openBtn.style.display = 'inline-block';
+  }
 
-    // Agar browser me ho (PWA nahi) aur current page wahi ho
-    if(!isPWA && currentURL === "https://todaylite.github.io/copyprompt/index.html") {
-        btn.style.display = 'inline-block';
-    }
-
-    // Agar PWA me ho -> button hidden rahe
-    btn.addEventListener('click', () => {
-        window.location.href = targetURL;
-    });
+  // Redirect on click
+  openBtn.addEventListener('click', () => {
+    window.location.href = targetURL;
+  });
 })();
 </script>
-
-
 
 
 
