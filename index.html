@@ -181,30 +181,30 @@ animation:subbtnanim  3s infinite;
 
 
 
-<!-- Custom Open in App Button -->
-<button id="appOpenBtnCustom" style="display:none;padding:10px 20px;background:#28a745;color:#fff;border:none;border-radius:5px;cursor:pointer;">
+<!-- Open in App Button -->
+<button id="btnOpenAppCustom" style="display:none;padding:10px 20px;background:#007bff;color:#fff;border:none;border-radius:5px;cursor:pointer;">
   Open in App
 </button>
 
 <script>
-  (function(){
-    const customBtn = document.getElementById('appOpenBtnCustom');
-    const redirectURL = "https://eloanwarehouse.blogspot.com";
-    const pageURL = window.location.href;
+(function() {
+    const btn = document.getElementById('btnOpenAppCustom');
+    const targetURL = "https://eloanwarehouse.blogspot.com";
+    const currentURL = window.location.href;
 
-    // Detect if PWA is installed (standalone mode)
-    const pwaInstalled = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    // Detect if PWA is installed / running in standalone mode
+    const isPWA = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 
-    // Show button only if PWA installed AND on specific page
-    if(pwaInstalled && pageURL === "https://todaylite.github.io/copyprompt/index.html"){
-      customBtn.style.display = 'inline-block';
+    // Show button only if NOT in PWA and on the specific page
+    if(!isPWA && currentURL === "https://todaylite.github.io/copyprompt/index.html") {
+        btn.style.display = 'inline-block';
     }
 
-    // Redirect on button click
-    customBtn.addEventListener('click', () => {
-      window.location.href = redirectURL;
+    // Redirect on click
+    btn.addEventListener('click', () => {
+        window.location.href = targetURL;
     });
-  })();
+})();
 </script>
  
 
