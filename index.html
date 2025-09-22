@@ -34,39 +34,38 @@ const installBtn = document.getElementById("installBtn");
 const openBtn = document.getElementById("openBtn");
 let deferredPrompt;
 
-// ✅ Check if PWA is installed
+// ✅ Check if running inside PWA (standalone)
 function isInstalled() {
   return window.navigator.standalone || window.matchMedia("(display-mode: standalone)").matches;
 }
 
-// ✅ Redirect if installed, else show correct button
-function handleRedirectOrButtons() {
+// ✅ Show/Hide buttons correctly
+function handleButtons() {
   if (isInstalled()) {
-    // Auto redirect
-    window.location.replace("https://google.com"); // 🔹 change to your redirect target
-    // Fallback: show open button
-    openBtn.style.display = "inline-block";
+    // App ke andar → hide openBtn, installBtn
+    openBtn.style.display = "none";
     installBtn.style.display = "none";
   } else {
-    // Not installed yet → wait for beforeinstallprompt
-    installBtn.style.display = "none";
-    openBtn.style.display = "none";
+    // Browser me → show openBtn agar already installed, 
+    // warna install button ke liye wait karo
+    if (deferredPrompt) {
+      installBtn.style.display = "inline-block";
+      openBtn.style.display = "none";
+    } else {
+      installBtn.style.display = "none";
+      openBtn.style.display = "inline-block";
+    }
   }
 }
 
-// ✅ Run on load & back navigation
-window.addEventListener("load", handleRedirectOrButtons);
-window.addEventListener("pageshow", (event) => {
-  if (event.persisted || performance.getEntriesByType("navigation")[0].type === "back_forward") {
-    handleRedirectOrButtons();
-  }
-});
+// ✅ Run on load
+window.addEventListener("load", handleButtons);
 
 // ✅ Before install prompt
 window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
   deferredPrompt = e;
-  installBtn.style.display = "inline-block"; // Show install button
+  handleButtons();
 });
 
 // ✅ Install button click
@@ -78,7 +77,6 @@ installBtn.addEventListener("click", async () => {
     console.log("PWA installed");
     installBtn.style.display = "none";
     openBtn.style.display = "inline-block";
-    window.location.replace("https://google.com");
   }
   deferredPrompt = null;
 });
@@ -88,10 +86,9 @@ window.addEventListener("appinstalled", () => {
   console.log("App installed successfully");
   installBtn.style.display = "none";
   openBtn.style.display = "inline-block";
-  window.location.replace("https://google.com");
 });
 
-// ✅ Open button click (fallback)
+// ✅ Open button click → open PWA
 openBtn.addEventListener("click", () => {
   window.location.href = "https://todaylite.github.io/copyprompt/index.html";
 });
