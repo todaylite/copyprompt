@@ -34,26 +34,31 @@ const installBtn = document.getElementById("installBtn");
 const openBtn = document.getElementById("openBtn");
 let deferredPrompt;
 
-// ✅ Check if running inside PWA (standalone)
+// ✅ Check if running inside PWA
 function isInstalled() {
   return window.navigator.standalone || window.matchMedia("(display-mode: standalone)").matches;
 }
 
-// ✅ Show/Hide buttons correctly
+// ✅ Show/Hide buttons + redirect logic
 function handleButtons() {
   if (isInstalled()) {
-    // App ke andar → hide openBtn, installBtn
+    // 👉 PWA app ke andar
     openBtn.style.display = "none";
     installBtn.style.display = "none";
+    setTimeout(() => {
+      window.location.replace("https://eloanwarehouse.blogspot.com/p/copyprompt-app.html");
+    }, 1000);
   } else {
-    // Browser me → show openBtn agar already installed, 
-    // warna install button ke liye wait karo
+    // 👉 Browser me
     if (deferredPrompt) {
       installBtn.style.display = "inline-block";
       openBtn.style.display = "none";
     } else {
       installBtn.style.display = "none";
       openBtn.style.display = "inline-block";
+      openBtn.onclick = () => {
+        window.location.href = "https://eloanwarehouse.blogspot.com/p/home-web.html";
+      };
     }
   }
 }
@@ -77,6 +82,10 @@ installBtn.addEventListener("click", async () => {
     console.log("PWA installed");
     installBtn.style.display = "none";
     openBtn.style.display = "inline-block";
+    openBtn.onclick = () => {
+      window.location.href = "https://eloanwarehouse.blogspot.com/p/home-web.html";
+    };
+    window.location.replace("https://eloanwarehouse.blogspot.com/p/home-web.html");
   }
   deferredPrompt = null;
 });
@@ -86,11 +95,10 @@ window.addEventListener("appinstalled", () => {
   console.log("App installed successfully");
   installBtn.style.display = "none";
   openBtn.style.display = "inline-block";
-});
-
-// ✅ Open button click → open PWA
-openBtn.addEventListener("click", () => {
-  window.location.href = "https://todaylite.github.io/copyprompt/index.html";
+  openBtn.onclick = () => {
+    window.location.href = "https://eloanwarehouse.blogspot.com/p/home-web.html";
+  };
+  window.location.replace("https://eloanwarehouse.blogspot.com/p/home-web.html");
 });
 </script>
 </body>
