@@ -180,6 +180,35 @@ animation:subbtnanim  3s infinite;
 </div>
 
 
+
+<!-- Custom Open in App Button -->
+<button id="appOpenBtnCustom" style="display:none;padding:10px 20px;background:#28a745;color:#fff;border:none;border-radius:5px;cursor:pointer;">
+  Open in App
+</button>
+
+<script>
+  (function(){
+    const customBtn = document.getElementById('appOpenBtnCustom');
+    const redirectURL = "https://eloanwarehouse.blogspot.com";
+    const pageURL = window.location.href;
+
+    // Detect if PWA is installed (standalone mode)
+    const pwaInstalled = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+    // Show button only if PWA installed AND on specific page
+    if(pwaInstalled && pageURL === "https://todaylite.github.io/copyprompt/index.html"){
+      customBtn.style.display = 'inline-block';
+    }
+
+    // Redirect on button click
+    customBtn.addEventListener('click', () => {
+      window.location.href = redirectURL;
+    });
+  })();
+</script>
+ 
+
+
 <style>
   #installBtn {
     display: none; /* Initially hidden */
