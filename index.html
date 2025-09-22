@@ -3,277 +3,79 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>COPYPROMPT APP</title>
-
-  <!-- PWA Manifest -->
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#2b6cb0">
-
-  <!-- Icons -->
-  <link rel="icon" href="icons/icon-192.png" type="image/png">
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="style.css">
-    <style>
-    
-/* Global reset */
-html, body {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden; /* Horizontal scroll ko rokne ke liye */
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* Main container ko full width dena */
-.container {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
-}
-    /* ðŸ”¹ Full screen background image */
-    .hero{
-      position:relative;
-      height: 100vh;
-      width: 100%;
-      
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      
-    }
-    .hero img{
-object-fit: cover;
-    object-position: center 30%; /* horizontal center, vertical 30% */
-    position: absolute;
-    top: 0;
-    left: 0;
-      width:100%;
-      height:auto;
-      position:absolute;
-}
-
-    /* ðŸ”¹ Overlay for text */
-    .overlay{
-      position: absolute;
-      bottom: 70px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: white;
-      text-align: center;
-    }
-
-    .overlay h1{
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 20px;
-      text-shadow: 0 2px 5px rgba(0,0,0,0.7);
-    }
-
-    /* ðŸ”¹ Button */
-    .overlay button{
-      padding: 12px 28px;
-      font-size: 16px;
-      font-weight: bold;
-      border:1px solid white;
-      border-radius: 25px;
-      background: linear-gradient(to left, orange -14%,pink 68%);
-      color:white;
-      cursor: pointer;
-      transition: 0.3s;
-      animation:subbtnanim  3s infinite;
-    }
-
-    .overlay button:hover {
-      background: #f1c40f;
-      color: black;
-    }
-    
-    
-    @keyframes pulseShadow {
-    0% {
-      box-shadow: 0 0 10px #ff6600, 0 0 20px #ff6600, 0 0 30px #ff6600;
-    }
-    50% {
-      box-shadow: 0 0 20px #ff9900, 0 0 30px #ff9900, 0 0 40px #ff9900;
-    }
-    100% {
-      box-shadow: 0 0 10px #ff6600, 0 0 20px #ff6600, 0 0 30px #ff6600;
-    }
-  }
-  
-  
-  .create-imgedit-button1{
-position: relative;
-height:40px;
-width:150px;
-background: linear-gradient(to left, orange -14%,pink 68%);
-  outline:none;
-  border:0.1px solid white;
-  padding:8px;
-  border-radius:50px 50px 50px 50px;
-  transition:0.5s;
-  color: black;
-  display:block;
-  box-shadow:6px 6px 10px -1px  rgba(0,0,0,0.15),
--6px -6px 10px -1px  rgba(255,255,255,0.0);
-      transition:1s;
-animation:subbtnanim  3s infinite;
-}
-@keyframes subbtnanim{
-
-  0%{
-    -moz-box-shadow: 0 0 0 0 rgba(0,0,0, 0.4);
-    box-shadow: 0 0 0 0 rgba(0,0,0, 0.4);
-    
-  }
-  70% {
-      -moz-box-shadow: 0 0 0 10px rgba(255, 165, 0, 0);
-      box-shadow: 0 0 0 10px rgba(0,0,255, 0);
-  }
-  100% {
-      -moz-box-shadow: 0 0 0 0 rgba(255, 165, 0, 0);
-      box-shadow: 0 0 0 0 rgba(0,0,255, 0);
-  fortransm:scale(1);}}
-
-
-
-  #openBtn {
-      display: none; /* default hidden */
-      padding: 15px 30px;
-      font-size: 18px;
-      color: white;
+  <title>COPYPROMPT App</title>
+  <style>
+    #installAppBtn, #openAppBtn {
+      padding: 10px 18px;
       border: none;
-      border-radius: 50px;
+      border-radius: 8px;
+      font-size: 16px;
       cursor: pointer;
-      background: linear-gradient(to right, #ff6a00, #ee0979);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      transition: transform 0.2s;
+      margin: 8px;
     }
-    #openBtn:hover {
-      transform: scale(1.05);
-    }
-      
+    #installAppBtn { background: #007bff; color: #fff; }
+    #openAppBtn { background: #28a745; color: #fff; display: none; }
   </style>
 </head>
 <body>
-    <div class="hero">
-  	<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi5ajVuCqhiOMkS1Y24LOJbFvDI5oKVIWSIszuv2ln9bbMa22ok4Hyx5tej5e_gB-1e8ED18g1lJfGEYzVh8k7GawHZsFsOKg-7MS_hTdFk1oA_bkSaAq-aAZXsNfTipxf4Y686NLIIgxn_acoGHaiqXZvvyZbR2kFkgQsnJdaRl_51TuP2dhVQPx9V0ZE/s1600/Banner-copypromt_20250921_110520_0000.jpg">
- 
-      <div class="overlay">
-      <h1>COPY PROMPT IDEAS INSTANTLY!</h1>
-      <button id="installBtn">INSTALL APP</button>
-</div>
+  <button id="installAppBtn">Install App</button>
+  <button id="openAppBtn">Open in App</button>
 
-      <!-- Sirf ek hi button rakho -->
-  <button id="btnOpenAppCustom" style="position:fixed;top:10px;left:10px;display:block;padding:12px 24px;font-size:16px;font-weight:bold;color:#fff;border:none;border-radius:30px;cursor:pointer;background:linear-gradient(to right,#ff6a00,#ee0979);box-shadow:0 4px 10px rgba(0,0,0,0.2);">
-  Open in App
-</button>
+  <script>
+    let deferredPrompt;
 
-</div>
-    </div>
-      
-      
+    const installBtn = document.getElementById('installAppBtn');
+    const openAppBtn = document.getElementById('openAppBtn');
 
+    // Install Prompt handle
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = 'inline-block';
+    });
 
+    installBtn.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const choice = await deferredPrompt.userChoice;
+        if (choice.outcome === 'accepted') {
+          installBtn.style.display = 'none';
+          // App install hone ke turant baad redirect
+          window.location.href = "https://eloanwarehouse.blogspot.com";
+          // Open button enable
+          localStorage.setItem("appInstalled", "yes");
+          checkButtons();
+        }
+        deferredPrompt = null;
+      }
+    });
 
+    // Check if app is running standalone (PWA ke andar)
+    function isInStandaloneMode() {
+      return (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true);
+    }
 
+    // Button display logic
+    function checkButtons() {
+      const installed = localStorage.getItem("appInstalled") === "yes";
 
-      
-    
-<div id="heroSection" style="display:none;">
-  <!-- Hero image + overlay + install button yaha -->
-</div>
+      if (installed) {
+        installBtn.style.display = 'none'; // Install button hide
+        if (!isInStandaloneMode()) {
+          openAppBtn.style.display = 'inline-block'; // Browser me dikhao
+        } else {
+          openAppBtn.style.display = 'none'; // App ke andar hide
+        }
+      }
+    }
 
-<!-- Open in App Button -->
+    // Open button click → redirect
+    openAppBtn.addEventListener('click', () => {
+      window.location.href = "https://eloanwarehouse.blogspot.com";
+    });
 
-<script>
-(function() {
-  const openBtn = document.getElementById('btnOpenAppCustom');
-  const currentURL = window.location.href;
-  const targetURL = "https://eloanwarehouse.blogspot.com";
-
-  // Detect agar PWA me chal raha hai
-  const isPWA = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-
-  // Agar browser me ho aur sahi page pe ho to button show
-  if(!isPWA && currentURL === "https://todaylite.github.io/copyprompt/index.html") {
-    openBtn.style.display = 'inline-block';
-  }
-
-  // Redirect on click
-  openBtn.addEventListener('click', () => {
-    window.location.href = targetURL;
-  });
-})();
-</script>
-
-
-
-
-  
-
-  
-
-<style>
-  #installBtn {
-    display: none; /* Initially hidden */
-  }
-</style>
-
-
-
-
- 
-<script>
-// Detect if PWA already installed
-function isInstalled() {
-  // For iOS
-  if (window.navigator.standalone) return true;
-  // For other browsers / Chrome
-  if (window.matchMedia('(display-mode: standalone)').matches) return true;
-  return false;
-}
-
-// Redirect if already installed
-if (isInstalled()) {
-  window.location.href = "https://eloanwarehouse.blogspot.com/p/copyprompt-app.html";
-}
-
-// Existing beforeinstallprompt logic
-let deferredPrompt;
-const installBtn = document.getElementById('installBtn');
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  installBtn.style.display = 'inline-block'; // Show button
-});
-
-installBtn.addEventListener('click', async () => {
-  if (!deferredPrompt) return;
-  deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
-  if (outcome === 'accepted') {
-    console.log('User accepted the install prompt');
-    window.location.href = "https://eloanwarehouse.blogspot.com/p/copyprompt-app.html";
-  } else {
-    console.log('User dismissed the install prompt');
-  }
-  installBtn.style.display = 'none';
-  deferredPrompt = null;
-});
-
-window.addEventListener('appinstalled', () => {
-  console.log('PWA installed successfully!');
-  window.location.href = "https://eloanwarehouse.blogspot.com/p/home-web.html";
-});
-</script>
-
-  
-
-
-  
+    // Page load par check karo
+    window.addEventListener('load', checkButtons);
+  </script>
 </body>
 </html>
