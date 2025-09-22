@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>COPYPROMPT APP</title>
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2b6cb0">
+
+  <!-- Icons -->
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css">
+    <style>
+    
+/* Global reset */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Horizontal scroll ko rokne ke liye */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Main container ko full width dena */
+.container {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+    /* ðŸ”¹ Full screen background image */
+    .hero{
+      position:relative;
+      height: 100vh;
+      width: 100%;
+      
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      
+    }
+    .hero img{
+object-fit: cover;
+    object-position: center 30%; /* horizontal center, vertical 30% */
+    position: absolute;
+    top: 0;
+    left: 0;
+      width:100%;
+      height:auto;
+      position:absolute;
+}
+
+    /* ðŸ”¹ Overlay for text */
+    .overlay{
+      position: absolute;
+      bottom: 70px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      text-align: center;
+    }
+
+    .overlay h1{
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.7);
+    }
+
+    /* ðŸ”¹ Button */
+    .overlay button{
+      padding: 12px 28px;
+      font-size: 16px;
+      font-weight: bold;
+      border:1px solid white;
+      border-radius: 25px;
+      background: linear-gradient(to left, orange -14%,pink 68%);
+      color:white;
+      cursor: pointer;
+      transition: 0.3s;
+      animation:subbtnanim  3s infinite;
+    }
+
+    .overlay button:hover {
+      background: #f1c40f;
+      color: black;
+    }
+    
+    
+    @keyframes pulseShadow {
+    0% {
+      box-shadow: 0 0 10px #ff6600, 0 0 20px #ff6600, 0 0 30px #ff6600;
+    }
+    50% {
+      box-shadow: 0 0 20px #ff9900, 0 0 30px #ff9900, 0 0 40px #ff9900;
+    }
+    100% {
+      box-shadow: 0 0 10px #ff6600, 0 0 20px #ff6600, 0 0 30px #ff6600;
+    }
+  }
+  
+  
+  .create-imgedit-button1{
+position: relative;
+height:40px;
+width:150px;
+background: linear-gradient(to left, orange -14%,pink 68%);
+  outline:none;
+  border:0.1px solid white;
+  padding:8px;
+  border-radius:50px 50px 50px 50px;
+  transition:0.5s;
+  color: black;
+  display:block;
+  box-shadow:6px 6px 10px -1px  rgba(0,0,0,0.15),
+-6px -6px 10px -1px  rgba(255,255,255,0.0);
+      transition:1s;
+animation:subbtnanim  3s infinite;
+}
+@keyframes subbtnanim{
+
+  0%{
