@@ -1,100 +1,84 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>COPYPROMPT APP</title>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#2b6cb0">
-<style>
-html, body { margin:0; padding:0; width:100%; box-sizing:border-box; overflow-x:hidden; }
-.hero{ position:relative; height:100vh; width:100%; display:flex; justify-content:center; align-items:center; text-align:center; }
-.hero img{ width:100%; height:100%; object-fit:cover; object-position:center 30%; position:absolute; top:0; left:0; }
-.overlay{ position:absolute; bottom:70px; left:50%; transform:translateX(-50%); text-align:center; color:white; }
-.overlay h1{ font-size:24px; font-weight:bold; margin-bottom:20px; text-shadow:0 2px 5px rgba(0,0,0,0.7); }
-#installBtn, #openBtn{
-  padding:12px 28px; font-size:16px; font-weight:bold; border:1px solid white; border-radius:25px; background: linear-gradient(to left, orange -14%,pink 68%); color:white; cursor:pointer; display:none;
-}
-#installBtn:hover, #openBtn:hover{ background:#f1c40f; color:black; }
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>COPYPROMPT APP</title>
+
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2b6cb0">
+
+  <style>
+    html, body { margin:0; padding:0; width:100%; box-sizing:border-box; overflow-x:hidden; }
+    .hero{ position:relative; height:100vh; width:100%; display:flex; justify-content:center; align-items:center; text-align:center; }
+    .hero img{ width:100%; height:100%; object-fit:cover; object-position:center 30%; position:absolute; top:0; left:0; }
+    .overlay{ position:absolute; bottom:70px; left:50%; transform:translateX(-50%); text-align:center; color:white; }
+    .overlay h1{ font-size:24px; font-weight:bold; margin-bottom:20px; text-shadow:0 2px 5px rgba(0,0,0,0.7); }
+    #installBtn { padding:12px 28px; font-size:16px; font-weight:bold; border:1px solid white; border-radius:25px; background: linear-gradient(to left, orange -14%,pink 68%); color:white; cursor:pointer; display:none; }
+    #installBtn:hover{ background:#f1c40f; color:black; }
+  </style>
 </head>
 <body>
-<div class="hero">
-<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi5ajVuCqhiOMkS1Y24LOJbFvDI5oKVIWSIszuv2ln9bbMa22ok4Hyx5tej5e_gB-1e8ED18g1lJfGEYzVh8k7GawHZsFsOKg-7MS_hTdFk1oA_bkSaAq-aAZXsNfTipxf4Y686NLIIgxn_acoGHaiqXZvvyZbR2kFkgQsnJdaRl_51TuP2dhVQPx9V0ZE/s1600/Banner-copypromt_20250921_110520_0000.jpg">
-<div class="overlay">
-<h1>COPY PROMPT IDEAS INSTANTLY!</h1>
-<button id="installBtn">INSTALL APP</button>
-<button id="openBtn">OPEN APP</button>
-</div>
-</div>
+  <div class="hero">
+    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi5ajVuCqhiOMkS1Y24LOJbFvDI5oKVIWSIszuv2ln9bbMa22ok4Hyx5tej5e_gB-1e8ED18g1lJfGEYzVh8k7GawHZsFsOKg-7MS_hTdFk1oA_bkSaAq-aAZXsNfTipxf4Y686NLIIgxn_acoGHaiqXZvvyZbR2kFkgQsnJdaRl_51TuP2dhVQPx9V0ZE/s1600/Banner-copypromt_20250921_110520_0000.jpg">
+    <div class="overlay">
+      <h1>COPY PROMPT IDEAS INSTANTLY!</h1>
+      <button id="installBtn">INSTALL APP</button>
+    </div>
+  </div>
 
-<script>
-const installBtn = document.getElementById("installBtn");
-const openBtn = document.getElementById("openBtn");
-let deferredPrompt;
+  <script>
+    const installBtn = document.getElementById("installBtn");
+    let deferredPrompt;
 
-// ✅ Check if PWA is installed
-function isInstalled() {
-  return window.navigator.standalone || window.matchMedia("(display-mode: standalone)").matches;
-}
+    // ✅ Check if PWA is installed
+    function isInstalled() {
+      return window.navigator.standalone || window.matchMedia("(display-mode: standalone)").matches;
+    }
 
-// ✅ Redirect if installed
-function redirectIfInstalled() {
-  if (isInstalled()) {
-    window.location.replace("https://google.com"); // change to your target URL
-    return true;
-  }
-  return false;
-}
+    // ✅ Redirect immediately if installed
+    function redirectIfInstalled() {
+      if (isInstalled()) {
+        window.location.replace("https://google.com"); // change to your redirect URL
+      }
+    }
 
-// Run on every page load & back-forward
-window.addEventListener("load", () => {
-  if (!redirectIfInstalled()) {
-    // fallback: show open button if redirect fails
-    setTimeout(() => {
-      openBtn.style.display = "inline-block";
-    }, 1000); // 1 second delay
-  }
-});
+    // Run on every page load & back navigation
+    window.addEventListener("load", redirectIfInstalled);
+    window.addEventListener("pageshow", (event) => {
+      if (event.persisted || performance.getEntriesByType("navigation")[0].type === "back_forward") {
+        redirectIfInstalled();
+      }
+    });
 
-window.addEventListener("pageshow", (event) => {
-  if (event.persisted || performance.getEntriesByType("navigation")[0].type === "back_forward") {
-    redirectIfInstalled();
-  }
-});
+    // ✅ Show install button if PWA not installed
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = "inline-block";
+    });
 
-// ✅ Before install prompt
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  installBtn.style.display = "inline-block";
-  openBtn.style.display = "none";
-});
+    // ✅ Install button click
+    installBtn.addEventListener("click", async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === "accepted") {
+        console.log("PWA installed");
+        installBtn.style.display = "none";
+        window.location.replace("https://google.com"); // redirect after install
+      } else {
+        console.log("Install dismissed");
+      }
+      deferredPrompt = null;
+    });
 
-// ✅ Install button click
-installBtn.addEventListener("click", async () => {
-  if (!deferredPrompt) return;
-  deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
-  if (outcome === "accepted") {
-    console.log("PWA installed");
-    installBtn.style.display = "none";
-    window.location.replace("https://google.com");
-  }
-  deferredPrompt = null;
-});
-
-// ✅ App installed event
-window.addEventListener("appinstalled", () => {
-  console.log("App installed successfully");
-  installBtn.style.display = "none";
-  window.location.replace("https://google.com");
-});
-
-// ✅ Open in App fallback button
-openBtn.addEventListener("click", () => {
-  window.location.href = "https://todaylite.github.io/copyprompt/index.html"; // fallback link
-});
-</script>
+    // ✅ App installed event
+    window.addEventListener("appinstalled", () => {
+      console.log("App installed successfully");
+      installBtn.style.display = "none";
+      window.location.replace("https://google.com"); // redirect after install
+    });
+  </script>
 </body>
 </html>
