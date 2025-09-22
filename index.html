@@ -264,6 +264,30 @@ window.addEventListener('appinstalled', () => {
   </script>
 
 
+
+<script>
+  // optbtn Detect if the site is running in PWA mode
+  function isInStandaloneMode() {
+    return (window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
+  }
+
+  window.addEventListener('load', () => {
+    const openBtn = document.getElementById('openBtn');
+    
+    if (isInStandaloneMode()) {
+      // Agar PWA installed hai
+      openBtn.style.display = 'block';
+    } else {
+      // Agar PWA installed nahi hai
+      openBtn.style.display = 'none';
+    }
+  });
+
+  function openInApp() {
+    // Yaha aapka app open karne ka code
+    alert("App open logic yaha dalein");
+  }
+</script>
   
 </body>
 </html>
