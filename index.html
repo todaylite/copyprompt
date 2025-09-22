@@ -165,6 +165,10 @@ animation:subbtnanim  3s infinite;
       <h1>COPY PROMPT IDEAS INSTANTLY!</h1>
       <button id="installBtn">INSTALL APP</button>
 </div>
+
+      <!-- Sirf ek hi button rakho -->
+  <button id="btnOpenAppCustom">Open in App</button>
+</div>
     </div>
       
       
@@ -181,14 +185,7 @@ animation:subbtnanim  3s infinite;
 
 
 
- 
-
-
-
-<!-- Open in App Button -->
-<button id="btnOpenAppCustom" style="display:none;padding:10px 20px;background:#007bff;color:#fff;border:none;border-radius:5px;cursor:pointer;">
-  Open in App
-</button>
+ <!-- Sirf open button ek hi button rakho -->
 
 <script>
 (function() {
@@ -196,20 +193,24 @@ animation:subbtnanim  3s infinite;
     const targetURL = "https://eloanwarehouse.blogspot.com";
     const currentURL = window.location.href;
 
-    // Detect if PWA is installed / running in standalone mode
+    // Default hidden
+    btn.style.display = "none";
+
+    // Detect agar PWA me open hai
     const isPWA = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 
-    // Show button only if NOT in PWA and on the specific page
+    // Agar browser me ho (PWA nahi) aur current page wahi ho
     if(!isPWA && currentURL === "https://todaylite.github.io/copyprompt/index.html") {
         btn.style.display = 'inline-block';
     }
 
-    // Redirect on click
+    // Agar PWA me ho -> button hidden rahe
     btn.addEventListener('click', () => {
         window.location.href = targetURL;
     });
 })();
 </script>
+
 
 
 
