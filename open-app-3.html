@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>CopyPrompt</title>
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: #f2f2f2;
+    }
+    #openBtn {
+      display: none; /* default hidden */
+      padding: 15px 30px;
+      font-size: 18px;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      background: linear-gradient(to right, #ff6a00, #ee0979);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+    #openBtn:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+  <button id="openBtn" onclick="openInApp()">Open in App</button>
+
+  <script>
+    // Detect if running inside installed PWA
+    function isInStandaloneMode() {
+      return (window.matchMedia('(display-mode: standalone)').matches) 
+          || (window.navigator.standalone === true);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const btn = document.getElementById("openBtn");
+
+      if (isInStandaloneMode()) {
+        // Already inside PWA app → hide button
+        btn.style.display = "none";
+      } else {
+        // Opened in browser → show button
+        btn.style.display = "block";
+      }
+    });
+
+    function openInApp() {
+      // App open karne ke liye apna PWA url ya deep link use karo
+      window.location.href = "https://todaylite.github.io/copyprompt/index.html";
+    }
+  </script>
+
+</body>
+</html>
