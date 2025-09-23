@@ -5,6 +5,7 @@
   "display": "standalone",
   "background_color": "#0B0A0F",
   "theme_color": "#000000",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjsj1joFruF_Me9UCWUWbq4fnHLpqJ9cxuUi31zZOamrYiMSILtAAKJ99fdJ6QgKBdGIWDbuhyKPtyoF6ql9vMCuw2NdkFt3ySw2mEGxKfjU5PH9DuDlPKkLWlDNAKCk0Mz9xkbTXDvnXjeTGhaU6OdFw45z1FUAAzuvdXIKzpDYFsqLjjBSHZGVlaFvUw/s1600/CopyPromt_20250921_102854_0000-min.png",
