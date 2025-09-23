@@ -3,7 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>PWA Install / Open Flow</title>
+  <title>CopyPrompt App</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2b6cb0">
   <style>
     body {
       background:#000;
@@ -19,24 +21,13 @@
       border-radius:8px;
       font-size:16px;
       cursor:pointer;
-      transition:0.3s;
     }
-    #installBtn {
-      background:#ff9800;
-      color:#fff;
-      display:none;
-    }
-    #openBtn {
-      background:#4caf50;
-      color:#fff;
-      display:none;
-    }
-    button:hover { opacity:0.8; }
+    #installBtn { background:#ff9800; color:#fff; display:none; }
+    #openBtn { background:#4caf50; color:#fff; display:none; }
   </style>
 </head>
 <body>
-
-  <h2>⚡ COPYPROMPT APP</h2>
+  <h2>⚡ CopyPrompt PWA</h2>
   <button id="installBtn">📥 Install App</button>
   <button id="openBtn">🚀 Open App</button>
 
@@ -45,53 +36,58 @@
     const installBtn = document.getElementById('installBtn');
     const openBtn = document.getElementById('openBtn');
 
-    // STEP 1: Check if already installed (standalone)
+    // Check if running as PWA
     if (window.matchMedia('(display-mode: standalone)').matches) {
       openBtn.style.display = "inline-block";
-    } else {
-      installBtn.style.display = "inline-block";
     }
 
-    // STEP 2: Listen install prompt
+    // Listen for install prompt
     window.addEventListener("beforeinstallprompt", (e) => {
       e.preventDefault();
       deferredPrompt = e;
-      installBtn.style.display = "inline-block";
+      installBtn.style.display = "inline-block"; // show install btn
     });
 
-    // STEP 3: Install button click
+    // Install App
     installBtn.addEventListener("click", async () => {
       if (deferredPrompt) {
         deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        if (outcome === "accepted") {
+        const choice = await deferredPrompt.userChoice;
+        if (choice.outcome === "accepted") {
           console.log("✅ Installed");
           installBtn.style.display = "none";
           openBtn.style.display = "inline-block";
         }
         deferredPrompt = null;
       } else {
-        // Fallback: direct link to PWA
-        window.location.href = "https://todaylite.github.io/copyprompt/index.html";
+        // Fallback: user can manually add via Chrome menu
+        alert("ℹ️ Please use Chrome menu → 'Add to Home screen' to install.");
       }
     });
 
-    // STEP 4: After app installed
+    // After installation event
     window.addEventListener("appinstalled", () => {
       installBtn.style.display = "none";
       openBtn.style.display = "inline-block";
     });
 
-    // STEP 5: Open App button action
+    // Open App Button
     openBtn.addEventListener("click", () => {
       if (window.matchMedia('(display-mode: standalone)').matches) {
-        // Inside PWA → open app page
         window.location.href = "https://eloanwarehouse.blogspot.com/p/copyprompt-app.html";
       } else {
-        // In Browser → open web home page
         window.location.href = "https://eloanwarehouse.blogspot.com/p/home-web.html";
       }
     });
+  </script>
+
+  <!-- Register Service Worker -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js").then(() => {
+        console.log("✅ Service Worker Registered");
+      });
+    }
   </script>
 </body>
 </html>
