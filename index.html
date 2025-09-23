@@ -41,7 +41,7 @@ button { padding:12px 28px; font-size:16px; font-weight:bold; border-radius:25px
 <div class="hero">
   <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi5ajVuCqhiOMkS1Y24LOJbFvDI5oKVIWSIszuv2ln9bbMa22ok4Hyx5tej5e_gB-1e8ED18g1lJfGEYzVh8k7GawHZsFsOKg-7MS_hTdFk1oA_bkSaAq-aAZXsNfTipxf4Y686NLIIgxn_acoGHaiqXZvvyZbR2kFkgQsnJdaRl_51TuP2dhVQPx9V0ZE/s1600/Banner-copypromt_20250921_110520_0000.jpg">
   <div class="overlay">
-    <h1>COPY PROMPT IDEAS INSTANTLY!😍</h1>
+    <h1>COPY PROMPT IDEAS INSTANTLY!</h1>
     <button id="installBtn">INSTALL APP<span id="shareCount" style="display:none;">0</span></button>
     <button id="openBtn">OPEN APP</button>
   </div>
@@ -115,63 +115,86 @@ button { padding:12px 28px; font-size:16px; font-weight:bold; border-radius:25px
 
 
 
+
+
+
+
+
+
+
+
+  
+  
+
 <script>
 const installBtn = document.getElementById("installBtn");
 const openBtn = document.getElementById("openBtn");
 let deferredPrompt;
 
-// ✅ Check if running inside PWA
+// âœ… Check if running inside PWA
 function isInstalled() {
   return window.navigator.standalone || window.matchMedia("(display-mode: standalone)").matches;
 }
 
-// ✅ Show/Hide buttons + redirect logic
+// âœ… Show/Hide buttons + redirect logic
 function handleButtons() {
   if (isInstalled()) {
-    // 👉 Already PWA ke andar
+    // ðŸ‘‰ PWA app ke andar
     openBtn.style.display = "none";
     installBtn.style.display = "none";
     setTimeout(() => {
       window.location.replace("https://eloanwarehouse.blogspot.com/p/copyprompt-app.html");
     }, 1000);
   } else {
-    // 👉 Browser me → default install button show
-    installBtn.style.display = "inline-block";
-    openBtn.style.display = "none";
+    // ðŸ‘‰ Browser me
+    if (deferredPrompt) {
+      installBtn.style.display = "inline-block";
+      openBtn.style.display = "none";
+    } else {
+      installBtn.style.display = "none";
+      openBtn.style.display = "inline-block";
+      openBtn.onclick = () => {
+        window.location.href = "https://eloanwarehouse.blogspot.com/p/home-web.html";
+      };
+    }
   }
 }
 
-// ✅ Run on load
+// âœ… Run on load
 window.addEventListener("load", handleButtons);
 
-// ✅ Before install prompt
+// âœ… Before install prompt
 window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
   deferredPrompt = e;
-  // Install button to already visible hai
+  handleButtons();
 });
 
-// ✅ Install button click
+// âœ… Install button click
 installBtn.addEventListener("click", async () => {
-  if (deferredPrompt) {
-    // 👉 Normal browser prompt
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === "accepted") {
-      console.log("PWA installed");
-      window.location.replace("https://eloanwarehouse.blogspot.com/p/home-web.html");
-    }
-    deferredPrompt = null;
-  } else {
-    // 👉 Agar browser ne prompt allow nahi kiya
-    // User ko guide karo manual install karne ka
-    alert("To install the app, tap browser menu (⋮) and select 'Add to Home screen'.");
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  if (outcome === "accepted") {
+    console.log("PWA installed");
+    installBtn.style.display = "none";
+    openBtn.style.display = "inline-block";
+    openBtn.onclick = () => {
+      window.location.href = "https://eloanwarehouse.blogspot.com/p/home-web.html";
+    };
+    window.location.replace("https://eloanwarehouse.blogspot.com/p/home-web.html");
   }
+  deferredPrompt = null;
 });
 
-// ✅ App installed event
+// âœ… App installed event
 window.addEventListener("appinstalled", () => {
   console.log("App installed successfully");
+  installBtn.style.display = "none";
+  openBtn.style.display = "inline-block";
+  openBtn.onclick = () => {
+    window.location.href = "https://eloanwarehouse.blogspot.com/p/home-web.html";
+  };
   window.location.replace("https://eloanwarehouse.blogspot.com/p/home-web.html");
 });
 </script>
@@ -179,11 +202,6 @@ window.addEventListener("appinstalled", () => {
 
 
 
-
-
-
-  
-  
 
 
 
