@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>PWA Install / Open Flow</title>
-
   <style>
     body {
       background:#000;
@@ -38,51 +37,56 @@
 <body>
 
   <h2>⚡ PWA Install / Open App Flow</h2>
-  <button id="installBtn">Install App</button>
-  <button id="openBtn">Open App</button>
+  <button id="installBtn">📥 Install App</button>
+  <button id="openBtn">🚀 Open App</button>
 
   <script>
     let deferredPrompt;
     const installBtn = document.getElementById('installBtn');
     const openBtn = document.getElementById('openBtn');
 
-    // Listen for the install prompt
-    window.addEventListener('beforeinstallprompt', (e) => {
+    // STEP 1: Check if already installed
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      // Already installed → show OPEN button
+      openBtn.style.display = "inline-block";
+    } else {
+      // Not installed yet → wait for install prompt
+      installBtn.style.display = "inline-block";
+    }
+
+    // STEP 2: Listen install prompt
+    window.addEventListener("beforeinstallprompt", (e) => {
       e.preventDefault();
       deferredPrompt = e;
-      installBtn.style.display = 'inline-block';
+      installBtn.style.display = "inline-block";
     });
 
-    // Handle Install Click
-    installBtn.addEventListener('click', async () => {
+    // STEP 3: Install button click
+    installBtn.addEventListener("click", async () => {
       if (deferredPrompt) {
         deferredPrompt.prompt();
-        const choice = await deferredPrompt.userChoice;
-        if (choice.outcome === 'accepted') {
-          console.log('✅ User accepted install');
-          installBtn.style.display = 'none';
-          openBtn.style.display = 'inline-block';
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === "accepted") {
+          console.log("✅ Installed");
+          installBtn.style.display = "none";
+          openBtn.style.display = "inline-block";
         }
         deferredPrompt = null;
+      } else {
+        alert("App install option not available right now");
       }
     });
 
-    // Check if already installed
-    window.addEventListener('appinstalled', () => {
-      console.log("📲 App installed successfully");
-      installBtn.style.display = 'none';
-      openBtn.style.display = 'inline-block';
+    // STEP 4: App Installed Event
+    window.addEventListener("appinstalled", () => {
+      installBtn.style.display = "none";
+      openBtn.style.display = "inline-block";
     });
 
-    // If app is already installed (Standalone check)
-    if (window.matchMedia('(display-mode: standalone)').matches) {
-      openBtn.style.display = 'inline-block';
-    }
-
-    // Open App Button action
-    openBtn.addEventListener('click', () => {
-      // Redirect target after open
-      window.location.href = "https://eloanwarehouse.blogspot.com/p/home-web.html"; 
+    // STEP 5: Open button action
+    openBtn.addEventListener("click", () => {
+      // Redirect after open
+      window.location.href = "https://eloanwarehouse.blogspot.com/p/home-web.html";
     });
   </script>
 </body>
