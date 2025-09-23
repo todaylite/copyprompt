@@ -36,7 +36,7 @@
 </head>
 <body>
 
-  <h2>⚡ PWA Install / Open App Flow</h2>
+  <h2>⚡ COPYPROMPT APP</h2>
   <button id="installBtn">📥 Install App</button>
   <button id="openBtn">🚀 Open App</button>
 
@@ -45,12 +45,10 @@
     const installBtn = document.getElementById('installBtn');
     const openBtn = document.getElementById('openBtn');
 
-    // STEP 1: Check if already installed
+    // STEP 1: Check if already installed (standalone)
     if (window.matchMedia('(display-mode: standalone)').matches) {
-      // Already installed → show OPEN button
       openBtn.style.display = "inline-block";
     } else {
-      // Not installed yet → wait for install prompt
       installBtn.style.display = "inline-block";
     }
 
@@ -73,20 +71,26 @@
         }
         deferredPrompt = null;
       } else {
-        alert("App install option not available right now");
+        // Fallback: direct link to PWA
+        window.location.href = "https://todaylite.github.io/copyprompt/index.html";
       }
     });
 
-    // STEP 4: App Installed Event
+    // STEP 4: After app installed
     window.addEventListener("appinstalled", () => {
       installBtn.style.display = "none";
       openBtn.style.display = "inline-block";
     });
 
-    // STEP 5: Open button action
+    // STEP 5: Open App button action
     openBtn.addEventListener("click", () => {
-      // Redirect after open
-      window.location.href = "https://eloanwarehouse.blogspot.com/p/home-web.html";
+      if (window.matchMedia('(display-mode: standalone)').matches) {
+        // Inside PWA → open app page
+        window.location.href = "https://eloanwarehouse.blogspot.com/p/copyprompt-app.html";
+      } else {
+        // In Browser → open web home page
+        window.location.href = "https://eloanwarehouse.blogspot.com/p/home-web.html";
+      }
     });
   </script>
 </body>
