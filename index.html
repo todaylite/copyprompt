@@ -198,5 +198,75 @@ window.addEventListener("appinstalled", () => {
   window.location.replace("https://eloanwarehouse.blogspot.com/p/home-web.html");
 });
 </script>
+
+
+
+
+
+
+<script>
+const installBtn = document.getElementById("installBtn");
+const openBtn = document.getElementById("openBtn");
+let deferredPrompt;
+
+// ✅ Check if running inside PWA
+function isInstalled() {
+  return window.navigator.standalone || window.matchMedia("(display-mode: standalone)").matches;
+}
+
+// ✅ Show/Hide buttons + redirect logic
+function handleButtons() {
+  if (isInstalled()) {
+    // 👉 Already PWA ke andar
+    openBtn.style.display = "none";
+    installBtn.style.display = "none";
+    setTimeout(() => {
+      window.location.replace("https://eloanwarehouse.blogspot.com/p/copyprompt-app.html");
+    }, 1000);
+  } else {
+    // 👉 Browser me → default install button show
+    installBtn.style.display = "inline-block";
+    openBtn.style.display = "none";
+  }
+}
+
+// ✅ Run on load
+window.addEventListener("load", handleButtons);
+
+// ✅ Before install prompt
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  // Install button to already visible hai
+});
+
+// ✅ Install button click
+installBtn.addEventListener("click", async () => {
+  if (deferredPrompt) {
+    // 👉 Normal browser prompt
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === "accepted") {
+      console.log("PWA installed");
+      window.location.replace("https://eloanwarehouse.blogspot.com/p/home-web.html");
+    }
+    deferredPrompt = null;
+  } else {
+    // 👉 Agar browser ne prompt allow nahi kiya
+    // User ko guide karo manual install karne ka
+    alert("To install the app, tap browser menu (⋮) and select 'Add to Home screen'.");
+  }
+});
+
+// ✅ App installed event
+window.addEventListener("appinstalled", () => {
+  console.log("App installed successfully");
+  window.location.replace("https://eloanwarehouse.blogspot.com/p/home-web.html");
+});
+</script>
+
+
+
+   
 </body>
 </html>
