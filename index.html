@@ -34,65 +34,37 @@
   </style>
 </head>
 <body>
-  <h1>🚀 My PWA App</h1>
+  <h1>ðŸš€ My PWA App</h1>
   <p>Progressive Web App Demo</p>
 
-  <button id="installBtn" style="display:none;">📲 Install App</button>
-<button id="openBtn" style="display:none;">🚀 Open App</button>
+  <button id="installBtn">ðŸ“² Install App</button>
 
-<script>
-const installBtn = document.getElementById("installBtn");
-const openBtn = document.getElementById("openBtn");
-let deferredPrompt;
+  <script>
+    let deferredPrompt;
+    const installBtn = document.getElementById("installBtn");
 
-// --- Detect if app is already installed ---
-const isAppInstalled = () => {
-  return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-};
-
-// --- Show buttons based on status ---
-if (isAppInstalled()) {
-  // App already installed → show Open button
-  openBtn.style.display = "inline-block";
-  openBtn.addEventListener("click", () => {
-    window.location.href = "index.html"; // app ka main page
-  });
-} else {
-  // App not installed → check PWA support
-  if (!("BeforeInstallPromptEvent" in window || ("serviceWorker" in navigator && "onbeforeinstallprompt" in window))) {
-    // Unsupported device → redirect
-    window.location.href = "https://veeimg.blogspot.com/p/support.html";
-  } else {
-    // Supported → show Install button
-    installBtn.style.display = "inline-block";
     window.addEventListener("beforeinstallprompt", (e) => {
       e.preventDefault();
       deferredPrompt = e;
+      installBtn.classList.add("show");
     });
 
     installBtn.addEventListener("click", async () => {
       if (deferredPrompt) {
         deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
-        if (outcome === "accepted") {
-          console.log("✅ User installed the app");
-          setTimeout(() => {
-            window.location.href = "thankyou.html"; // redirect after 5s
-          }, 5000);
-        }
+        console.log("User response:", outcome);
         deferredPrompt = null;
+        installBtn.classList.remove("show");
       }
     });
-  }
-}
 
-// Service Worker register
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js")
-    .then(() => console.log("✅ Service Worker Registered"))
-    .catch(err => console.log("SW fail:", err));
-}
-</script>
-  
+    // Service Worker Register
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js").then(() => {
+        console.log("âœ… Service Worker Registered");
+      }).catch(err => console.log("SW fail:", err));
+    }
+  </script>
 </body>
 </html>
