@@ -199,8 +199,15 @@ window.addEventListener("appinstalled", () => {
 });
 </script>
 
-
-
+<script>
+    // Service Worker Register
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js").then(() => {
+        console.log("âœ… Service Worker Registered");
+      }).catch(err => console.log("SW fail:", err));
+    }
+    
+</script>
 
 
 
