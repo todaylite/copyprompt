@@ -4,13 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My PWA App</title>
-
-  <!-- Manifest -->
   <link rel="manifest" href="manifest.json">
-
-  <!-- Theme color -->
   <meta name="theme-color" content="#000000">
-
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -18,97 +13,87 @@
       text-align: center;
       padding: 40px;
     }
-    #installBtn {
-      display: none;
+    button {
       padding: 12px 25px;
       font-size: 18px;
       border: none;
       border-radius: 8px;
-      background: #ff4747;
       color: white;
       cursor: pointer;
+      margin: 10px;
     }
-    #installBtn.show {
-      display: inline-block;
-    }
+    #installBtn { background: #ff4747; display: none; }
+    #openBtn { background: #4CAF50; display: none; }
   </style>
 </head>
 <body>
-  <h1>ðŸš€ My PWA App</h1>
+  <h1>🚀 My PWA App</h1>
   <p>Progressive Web App Demo</p>
 
-  <button id="installBtn">ðŸ“² Install App</button>
-<button id="openBtn" style="display:none; padding:12px 25px; font-size:18px; border:none; border-radius:8px; background:#4CAF50; color:white; cursor:pointer;">🚀 Open App</button>
-
+  <button id="installBtn">📲 Install App</button>
+  <button id="openBtn">🚀 Open App</button>
 
   <script>
-    let deferredPrompt;
     const installBtn = document.getElementById("installBtn");
+    const openBtn = document.getElementById("openBtn");
+    let deferredPrompt;
 
+    // Listen for beforeinstallprompt event
     window.addEventListener("beforeinstallprompt", (e) => {
       e.preventDefault();
       deferredPrompt = e;
-      installBtn.classList.add("show");
+
+      // Show install button only if app not installed
+      if (!localStorage.getItem('pwaInstalled')) {
+        installBtn.style.display = "inline-block";
+      }
     });
 
+    // Install button click
     installBtn.addEventListener("click", async () => {
       if (deferredPrompt) {
         deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
-        console.log("User response:", outcome);
+        if (outcome === 'accepted') {
+          localStorage.setItem('pwaInstalled', 'true');
+          installBtn.style.display = "none";
+          openBtn.style.display = "inline-block";
+        }
         deferredPrompt = null;
-        installBtn.classList.remove("show");
       }
     });
 
-    // Service Worker Register
+    // Appinstalled event
+    window.addEventListener("appinstalled", () => {
+      localStorage.setItem('pwaInstalled', 'true');
+      installBtn.style.display = "none";
+      openBtn.style.display = "inline-block";
+      console.log("App installed!");
+    });
+
+    // Page load check
+    function checkAppStatus() {
+      if (localStorage.getItem('pwaInstalled') || window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+        installBtn.style.display = "none";
+        openBtn.style.display = "inline-block";
+      } else {
+        installBtn.style.display = "inline-block";
+        openBtn.style.display = "none";
+      }
+    }
+    checkAppStatus();
+
+    // Open button click
+    openBtn.addEventListener("click", () => {
+      window.location.href = "index.html"; // Replace with your PWA start_url
+    });
+
+    // Service Worker Registration
     if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("sw.js").then(() => {
-        console.log("âœ… Service Worker Registered");
-      }).catch(err => console.log("SW fail:", err));
+      navigator.serviceWorker.register("sw.js")
+        .then(() => console.log("✔ Service Worker Registered"))
+        .catch(err => console.log("SW registration failed:", err));
     }
   </script>
-
-
-
-
-
-
-
-
-
-
-
-<script>
-  const openBtn = document.getElementById("openBtn");
-
-  // Check if PWA is already installed
-  function isAppInstalled() {
-    // For standalone mode
-    if (window.matchMedia('(display-mode: standalone)').matches) return true;
-    // For iOS Safari
-    if (window.navigator.standalone) return true;
-    return false;
-  }
-
-  // Show the open button only if app is installed
-  if (isAppInstalled()) {
-    openBtn.style.display = "inline-block";
-  }
-
-  openBtn.addEventListener("click", () => {
-    // Open the PWA's start URL
-    window.location.href = "index.html"; // or your start_url
-  });
-
-  // Optional: Detect if app installed after prompt
-  window.addEventListener("appinstalled", () => {
-    openBtn.style.display = "inline-block";
-    console.log("App was installed!");
-  });
-</script>
-
-
-  
 </body>
 </html>
