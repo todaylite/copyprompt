@@ -199,15 +199,49 @@ window.addEventListener("appinstalled", () => {
 });
 </script>
 
+
+
 <script>
-    // Service Worker Register
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("sw.js").then(() => {
-        console.log("âœ… Service Worker Registered");
-      }).catch(err => console.log("SW fail:", err));
-    }
-    
+  // Service Worker Register
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js')
+      .then((reg) => {
+        console.log('✅ Service Worker Registered');
+
+        // Listen for updates in service worker
+        reg.addEventListener('updatefound', () => {
+          const newWorker = reg.installing;
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              // Naya update available
+              console.log('🔄 New version available!');
+              
+              // Optional: Auto reload or custom notification
+              if (confirm('New version available! Reload to update?')) {
+                window.location.reload();
+              }
+            }
+          });
+        });
+      })
+      .catch((err) => console.log('Service Worker registration failed:', err));
+
+    // Listen for controller change (already installed users)
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      console.log('Service Worker controller changed - new version active');
+      // Optional: auto reload if needed
+      // window.location.reload();
+    });
+  }
 </script>
+
+
+
+
+
+   
+
+
 
 
 
