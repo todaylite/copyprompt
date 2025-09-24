@@ -1,94 +1,99 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My PWA App</title>
+<!doctype html>  
+<html lang="en">  
+<head>  
+  <meta charset="UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <title>My PWA App</title>  
 
-  <!-- Manifest -->
-  <link rel="manifest" href="manifest.json">
+  <!-- Manifest -->  
+  <link rel="manifest" href="manifest.json">  
 
-  <!-- Theme color -->
-  <meta name="theme-color" content="#000000">
+  <!-- Theme color -->  
+  <meta name="theme-color" content="#000000">  
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      text-align: center;
-      padding: 40px;
-    }
-    button {
-      display: none;
-      padding: 12px 25px;
-      font-size: 18px;
-      border: none;
-      border-radius: 8px;
-      background: #ff4747;
-      color: white;
-      cursor: pointer;
-      margin: 10px;
-    }
-    button.show {
-      display: inline-block;
-    }
-  </style>
-</head>
-<body>
-  <h1>🚀 My PWA App</h1>
-  <p>Progressive Web App Demo</p>
+  <style>  
+    body {  
+      font-family: Arial, sans-serif;  
+      background: #f5f5f5;  
+      text-align: center;  
+      padding: 40px;  
+    }  
+    #installBtn, #openBtn {  
+      display: none;  
+      padding: 12px 25px;  
+      font-size: 18px;  
+      border: none;  
+      border-radius: 8px;  
+      margin: 10px;  
+      cursor: pointer;  
+    }  
+    #installBtn {  
+      background: #ff4747;  
+      color: white;  
+    }  
+    #openBtn {  
+      background: #28a745;  
+      color: white;  
+    }  
+    .show {  
+      display: inline-block;  
+    }  
+  </style>  
+</head>  
+<body>  
+  <h1>🚀 My PWA App</h1>  
+  <p>Progressive Web App Demo</p>  
 
-  <button id="installBtn">📲 Install App</button>
-  <button id="openBtn">✅ Open App</button>
+  <button id="installBtn">📲 Install App</button>  
+  <button id="openBtn">📂 Open App</button>  
 
-  <script>
-    let deferredPrompt;
-    const installBtn = document.getElementById("installBtn");
-    const openBtn = document.getElementById("openBtn");
+  <script>  
+    let deferredPrompt;  
+    const installBtn = document.getElementById("installBtn");  
+    const openBtn = document.getElementById("openBtn");  
 
-    // Listen for install prompt
-    window.addEventListener("beforeinstallprompt", (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      installBtn.classList.add("show");
-    });
+    // Install prompt show  
+    window.addEventListener("beforeinstallprompt", (e) => {  
+      e.preventDefault();  
+      deferredPrompt = e;  
+      installBtn.classList.add("show");  
+    });  
 
-    // Install button click
-    installBtn.addEventListener("click", async () => {
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        console.log("User response:", outcome);
-        deferredPrompt = null;
-        installBtn.classList.remove("show");
-      }
-    });
+    // Install button click  
+    installBtn.addEventListener("click", async () => {  
+      if (deferredPrompt) {  
+        deferredPrompt.prompt();  
+        const { outcome } = await deferredPrompt.userChoice;  
+        console.log("User response:", outcome);  
+        deferredPrompt = null;  
+        installBtn.classList.remove("show");  
 
-    // Detect when app is installed
-    window.addEventListener("appinstalled", () => {
-      console.log("PWA Installed ✅");
-      installBtn.classList.remove("show");
-      openBtn.classList.add("show");
-      localStorage.setItem("pwa_installed", "true"); // remember status
-    });
+        if (outcome === "accepted") {  
+          openBtn.classList.add("show");  
+        }  
+      }  
+    });  
 
-    // On page load check if already installed
-    if (localStorage.getItem("pwa_installed") === "true") {
-      installBtn.classList.remove("show");
-      openBtn.classList.add("show");
-    }
+    // Open App button click  
+    openBtn.addEventListener("click", () => {  
+      // start_url manifest me jo diya hai us par open karega  
+      window.location.href = "index.html";  
+    });  
 
-    // Open App button action (redirect to start_url from manifest)
-    openBtn.addEventListener("click", () => {
-      window.location.href = "index.html"; // 👈 yaha apne PWA ka start_url daalna
-    });
+    // Agar already installed hai to open button dikhaye  
+    window.addEventListener("DOMContentLoaded", () => {  
+      if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone) {  
+        installBtn.classList.remove("show");  
+        openBtn.classList.add("show");  
+      }  
+    });  
 
-    // Service Worker Register
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("sw.js").then(() => {
-        console.log("✅ Service Worker Registered");
-      }).catch(err => console.log("SW fail:", err));
-    }
-  </script>
-</body>
+    // Service Worker Register  
+    if ("serviceWorker" in navigator) {  
+      navigator.serviceWorker.register("sw.js").then(() => {  
+        console.log("✅ Service Worker Registered");  
+      }).catch(err => console.log("SW fail:", err));  
+    }  
+  </script>  
+</body>  
 </html>
