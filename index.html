@@ -52,39 +52,35 @@
   <h1>ðŸš€ My PWA App</h1>
   <p>Progressive Web App Demo</p>
 
-  <button id="installBtn">Install App💙</button>
+  <button id="installBtn">Install App💙1</button>
  <button id="openBtn">🚀 Open App</button>
 
   <script>
-    let deferredPrompt;
-    const installBtn = document.getElementById("installBtn");
-    const openBtn = document.getElementById("openBtn");
+  const installBtn = document.getElementById("installBtn");
+  const openBtn = document.getElementById("openBtn");
 
+  // Function to detect if app is already installed
+  function checkPWAInstalled() {
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 
-    window.addEventListener("beforeinstallprompt", (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      installBtn.classList.add("show");
-    });
-
-    installBtn.addEventListener("click", async () => {
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        console.log("User response:", outcome);
-        deferredPrompt = null;
-        installBtn.classList.remove("show");
-openBtn.classList.remove("show");
-
-      }
-    });
-
-    // Service Worker Register
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("sw.js").then(() => {
-        console.log("âœ… Service Worker Registered");
-      }).catch(err => console.log("SW fail:", err));
+    if (isStandalone) {
+      // App is installed
+      installBtn.style.display = "none";
+      openBtn.style.display = "inline-block";
+    } else {
+      // App not installed
+      installBtn.style.display = "inline-block";
+      openBtn.style.display = "none";
     }
-  </script>
+  }
+
+  // Check on page load
+  window.addEventListener("load", checkPWAInstalled);
+
+  // Optional: check on visibility change (e.g., after install)
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) checkPWAInstalled();
+  });
+</script>
 </body>
 </html>
