@@ -1,103 +1,216 @@
 <!doctype html>
 <html lang="en">
 <head>
+   <!-- Google tag (gtag.js) -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-189M5X01BR"></script>
+
+<script>
+
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag(){dataLayer.push(arguments);}
+
+  gtag('js', new Date());
+
+  gtag('config', 'G-189M5X01BR');
+
+</script>
+   
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>COPYPROMPT APP</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#2b6cb0">
-
-<!-- Firebase SDK v9 (Modular) -->
-<script type="module">
-  // Import Firebase modules
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
-  import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-messaging.js";
-
-  // Firebase config
-  const firebaseConfig = {
-    apiKey: "AIzaSyAwMir8E-5e4fe-hdwzIHxfLzdnKa9LK20",
-    authDomain: "copyprompt-app.firebaseapp.com",
-    projectId: "copyprompt-app",
-    storageBucket: "copyprompt-app.firebasestorage.app",
-    messagingSenderId: "896337421281",
-    appId: "1:896337421281:web:35ee45a7b0a76f437d68a0"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-
-  // Initialize Messaging
-  const messaging = getMessaging(app);
-
-  // Notify button listener
-  window.addEventListener('DOMContentLoaded', () => {
-    const notifyBtn = document.getElementById('notifyBtn');
-
-    notifyBtn.addEventListener('click', async () => {
-      try {
-        const permission = await Notification.requestPermission();
-        if(permission === 'granted'){
-          console.log("Notification permission granted!");
-          
-          // Get FCM token
-          const token = await getToken(messaging, { 
-            vapidKey: "BIet79wDomw6_EVD6ScqSf8ST8zmVdpP146NxOU9JCIQtbCoA6r2WGkM_DMITlqX1XhFy1a3angnV7Vfkl6Z3F0" 
-          });
-          
-          if(token){
-            console.log("FCM Token:", token);
-            alert("FCM Token generated! Check console.");
-          } else {
-            console.log("No registration token available. Request permission again.");
-          }
-        } else {
-          console.log("Notification permission denied.");
-        }
-      } catch (err) {
-        console.error("Error getting notification permission or token:", err);
-      }
-    });
-  });
-
-  // Register service worker
-  if('serviceWorker' in navigator){
-    navigator.serviceWorker.register('firebase-messaging-sw.js')
-      .then(registration => console.log("Service Worker registered:", registration))
-      .catch(err => console.error("Service Worker registration failed:", err));
-  }
-</script>
-
 <style>
-  #notifyBtn {
-    display:block;
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: linear-gradient(45deg, #25D366, #128C7E);
-    color: white;
-    border: none;
-    border-radius: 50px;
-    padding: 15px 25px;
-    font-size: 16px;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-    transition: transform 0.2s;
-    z-index: 9999;
-  }
-  #notifyBtn:hover { transform: scale(1.05); }
+html, body { margin:0; padding:0; width:100%; box-sizing:border-box; overflow-x:hidden; }
+.hero{ position:relative; height:100vh; width:100%; display:flex; justify-content:center; align-items:center; text-align:center; }
+.hero img{ width:100%; height:auto; object-fit:cover; object-position:center 30%; position:absolute; top:0; left:0; }
+    
+.overlay{ position:absolute; bottom:70px; left:50%; transform:translateX(-50%); text-align:center; color:white; }
+.overlay h1{ font-size:24px; font-weight:bold; margin-bottom:20px; text-shadow:0 2px 5px rgba(0,0,0,0.7); }
+button { padding:12px 28px; font-size:16px; font-weight:bold; border-radius:25px; cursor:pointer; border:none; display:none; }
+#installBtn { background: linear-gradient(to left, orange -14%, pink 68%); color:white; border:1px solid white; }
+#installBtn:hover{ background:#f1c40f; color:black; }
+#openBtn { background: linear-gradient(to right, #ff6a00, #ee0979); color:white; box-shadow:0 4px 10px rgba(0,0,0,0.2); }
+#openBtn:hover { transform:scale(1.05); }
 </style>
 </head>
 <body>
-
 <div class="hero">
-  <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi5ajVuCqhiOMkS1Y24LOJbFvDI5oKVIWSIszuv2ln9bbMa22ok4Hyx5tej5e_gB-1e8ED18g1lJfGEYzVh8k7GawHZsFsOKg-7MS_hTdFk1oA_bkSaAq-aAZXsNfTipxf4Y686NLIIgxn_acoGHaiqXZvvyZbR2kFkgQsnJdaRl_51TuP2dhVQPx9V0ZE/s1600/Banner-copypromt_20250921_110520_0000.jpg" style="width:100%; height:auto;">
+  <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi5ajVuCqhiOMkS1Y24LOJbFvDI5oKVIWSIszuv2ln9bbMa22ok4Hyx5tej5e_gB-1e8ED18g1lJfGEYzVh8k7GawHZsFsOKg-7MS_hTdFk1oA_bkSaAq-aAZXsNfTipxf4Y686NLIIgxn_acoGHaiqXZvvyZbR2kFkgQsnJdaRl_51TuP2dhVQPx9V0ZE/s1600/Banner-copypromt_20250921_110520_0000.jpg">
   <div class="overlay">
     <h1>COPY PROMPT IDEAS INSTANTLY!</h1>
-    <button id="installBtn">INSTALL APP</button>
+    <button id="installBtn">INSTALL APP<span id="shareCount" style="display:none;">0</span></button>
     <button id="openBtn">OPEN APP</button>
   </div>
-  <div id="notifyBtn">enable Notifications</div>
 </div>
 
+
+
+<!-- capture count button start  -->
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+
+
+<script>
+
+  const firebaseConfig = {
+
+    apiKey: "AIzaSyCvS35O-TEWh7YBA28sXa1VEzozwOYR6Y4",
+
+    authDomain: "todaylite-github-share.firebaseapp.com",
+
+    databaseURL: "https://todaylite-github-share-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+    projectId: "todaylite-github-share",
+
+    storageBucket: "todaylite-github-share.firebasestorage.app",
+
+    messagingSenderId: "149613187050",
+
+    appId: "1:149613187050:web:87e2e35d4e76924ceaac93",
+
+    measurementId: "G-KD18PK3VBZ"
+
+  };
+
+  firebase.initializeApp(firebaseConfig);
+
+  const db = firebase.database();
+
+  // Unique article id based on URL path
+
+  const articleId = window.location.pathname
+
+    .replace(/\//g, "-")
+
+    .substring(1)
+
+    .replace(/\.[^/.]+$/, "") || "default-article";
+
+  console.log("Article ID:", articleId);
+
+  const shareCountRef = db.ref("shares/" + articleId);
+
+  shareCountRef.on("value", snapshot => {
+
+    const count = snapshot.val() || 0;
+
+    document.getElementById("shareCount").textContent = count;
+
+  });
+
+  document.getElementById("installBtn").addEventListener("click", () => {
+
+    shareCountRef.transaction(current => (current || 0) + 1);
+
+  });
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+<script>
+const installBtn = document.getElementById("installBtn");
+const openBtn = document.getElementById("openBtn");
+let deferredPrompt;
+
+// âœ… Check if running inside PWA
+function isInstalled() {
+  return window.navigator.standalone || window.matchMedia("(display-mode: standalone)").matches;
+}
+
+// âœ… Show/Hide buttons + redirect logic
+function handleButtons() {
+  if (isInstalled()) {
+    // ðŸ‘‰ PWA app ke andar
+    openBtn.style.display = "none";
+    installBtn.style.display = "none";
+    setTimeout(() => {
+      window.location.replace("https://eloanwarehouse.blogspot.com/p/copyprompt-app.html");
+    }, 1000);
+  } else {
+    // ðŸ‘‰ Browser me
+    if (deferredPrompt) {
+      installBtn.style.display = "inline-block";
+      openBtn.style.display = "none";
+    } else {
+      installBtn.style.display = "none";
+      openBtn.style.display = "inline-block";
+      openBtn.onclick = () => {
+        window.location.href = "https://eloanwarehouse.blogspot.com/p/home-web.html";
+      };
+    }
+  }
+}
+
+// âœ… Run on load
+window.addEventListener("load", handleButtons);
+
+// âœ… Before install prompt
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  handleButtons();
+});
+
+// âœ… Install button click
+installBtn.addEventListener("click", async () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  if (outcome === "accepted") {
+    console.log("PWA installed");
+    installBtn.style.display = "none";
+    openBtn.style.display = "inline-block";
+    openBtn.onclick = () => {
+      window.location.href = "https://eloanwarehouse.blogspot.com/p/home-web.html";
+    };
+    window.location.replace("https://eloanwarehouse.blogspot.com/p/home-web.html");
+  }
+  deferredPrompt = null;
+});
+
+// âœ… App installed event
+window.addEventListener("appinstalled", () => {
+  console.log("App installed successfully");
+  installBtn.style.display = "none";
+  openBtn.style.display = "inline-block";
+  openBtn.onclick = () => {
+    window.location.href = "https://eloanwarehouse.blogspot.com/p/home-web.html";
+  };
+  window.location.replace("https://eloanwarehouse.blogspot.com/p/home-web.html");
+});
+</script>
+
+<script>
+    // Service Worker Register
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js").then(() => {
+        console.log("âœ… Service Worker Registered");
+      }).catch(err => console.log("SW fail:", err));
+    }
+    
+</script>
+
+
+   
+   
 </body>
 </html>
