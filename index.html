@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="en">
 <head>
+   <!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-messaging.js"></script>
    <!-- Google tag (gtag.js) -->
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-189M5X01BR"></script>
@@ -214,6 +217,69 @@ window.addEventListener("appinstalled", () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  // 1️⃣ Firebase config (Firebase Console → Web App me copy karo)
+  const firebaseConfig = {
+    apiKey: "AIzaSyAwMir8E-5e4fe-hdwzIHxfLzdnKa9LK20",
+    authDomain: "copyprompt-app.firebaseapp.com",
+    projectId: "copyprompt-app",
+    storageBucket: "copyprompt-app.firebasestorage.app",
+    messagingSenderId: "896337421281",
+    appId: "1:896337421281:web:35ee45a7b0a76f437d68a0"
+  };
+
+  // 2️⃣ Initialize Firebase
+  const app = firebase.initializeApp(firebaseConfig);
+
+  // 3️⃣ Initialize Messaging
+  const messaging = firebase.messaging();
+
+  // 4️⃣ Request Notification Permission from user
+  Notification.requestPermission().then((permission) => {
+    if (permission === "granted") {
+      console.log("Notification permission granted.");
+
+      // 5️⃣ Get FCM Token
+      messaging.getToken({ vapidKey: "YOUR_VAPID_KEY" })
+        .then((currentToken) => {
+          if (currentToken) {
+            console.log("FCM Token:", currentToken);
+            // ✅ Is token ko backend/database me save karo
+          } else {
+            console.log("No registration token available. Request permission to generate one.");
+          }
+        })
+        .catch((err) => {
+          console.log("An error occurred while retrieving token: ", err);
+        });
+
+    } else {
+      console.log("Notification permission denied.");
+    }
+  });
+</script>
+   
    
 </body>
 </html>
