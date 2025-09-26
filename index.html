@@ -23,6 +23,33 @@
 <title>COPYPROMPT APP</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#2b6cb0">
+
+
+  <style>
+    /* Fixed Button Style */
+    #notifyBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(45deg, #25D366, #128C7E); /* WhatsApp-style gradient */
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 15px 25px;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      transition: transform 0.2s;
+      z-index: 9999;
+    }
+    #notifyBtn:hover {
+      transform: scale(1.05);
+    }
+  </style>
+
+
+
+   
 <style>
 html, body { margin:0; padding:0; width:100%; box-sizing:border-box; overflow-x:hidden; }
 .hero{ position:relative; height:100vh; width:100%; display:flex; justify-content:center; align-items:center; text-align:center; }
@@ -221,6 +248,52 @@ window.addEventListener("appinstalled", () => {
 
 
 
+<!-- Fixed Notification Button -->
+  <button id="notifyBtn">Enable Notifications</button>
+
+  <script>
+    // 1️⃣ Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyAwMir8E-5e4fe-hdwzIHxfLzdnKa9LK20",
+      authDomain: "copyprompt-app.firebaseapp.com",
+      projectId: "copyprompt-app",
+      storageBucket: "copyprompt-app.firebasestorage.app",
+      messagingSenderId: "896337421281",
+      appId: "1:896337421281:web:35ee45a7b0a76f437d68a0"
+    };
+
+    // 2️⃣ Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+
+    // 3️⃣ Initialize Messaging
+    const messaging = firebase.messaging();
+
+    // 4️⃣ Button click to request permission
+    document.getElementById('notifyBtn').addEventListener('click', () => {
+      Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+          console.log("Notification permission granted.");
+
+          // 5️⃣ Get FCM Token
+          messaging.getToken({ vapidKey: "YOUR_VAPID_KEY" })
+            .then((currentToken) => {
+              if (currentToken) {
+                console.log("FCM Token:", currentToken);
+                alert("FCM Token generated! Check console.");
+              } else {
+                console.log("No registration token available.");
+              }
+            })
+            .catch((err) => {
+              console.log("Error retrieving token:", err);
+            });
+
+        } else {
+          console.log("Notification permission denied.");
+        }
+      });
+    });
+  </script>
 
 
 
@@ -234,49 +307,6 @@ window.addEventListener("appinstalled", () => {
 
 
 
-
-<script>
-  // 1️⃣ Firebase config (Firebase Console → Web App me copy karo)
-  const firebaseConfig = {
-    apiKey: "AIzaSyAwMir8E-5e4fe-hdwzIHxfLzdnKa9LK20",
-    authDomain: "copyprompt-app.firebaseapp.com",
-    projectId: "copyprompt-app",
-    storageBucket: "copyprompt-app.firebasestorage.app",
-    messagingSenderId: "896337421281",
-    appId: "1:896337421281:web:35ee45a7b0a76f437d68a0"
-  };
-
-  // 2️⃣ Initialize Firebase
-  const app = firebase.initializeApp(firebaseConfig);
-
-  // 3️⃣ Initialize Messaging
-  const messaging = firebase.messaging();
-
-  // 4️⃣ Request Notification Permission from user
-  Notification.requestPermission().then((permission) => {
-    if (permission === "granted") {
-      console.log("Notification permission granted.");
-
-      // 5️⃣ Get FCM Token
-      messaging.getToken({ vapidKey: "YOUR_VAPID_KEY" })
-        .then((currentToken) => {
-          if (currentToken) {
-            console.log("FCM Token:", currentToken);
-            // ✅ Is token ko backend/database me save karo
-          } else {
-            console.log("No registration token available. Request permission to generate one.");
-          }
-        })
-        .catch((err) => {
-          console.log("An error occurred while retrieving token: ", err);
-        });
-
-    } else {
-      console.log("Notification permission denied.");
-    }
-  });
-</script>
-   
    
 </body>
 </html>
