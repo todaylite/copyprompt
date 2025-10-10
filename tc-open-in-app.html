@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>COPYPROMPT-OPEN IN APP</title>
+
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-189M5X01BR"></script>
+
+<script>
+
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag(){dataLayer.push(arguments);}
+
+  gtag('js', new Date());
+
+  gtag('config', 'G-189M5X01BR');
+
+</script>
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2b6cb0">
+
+  <!-- Icons -->
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css">
+    <style>
+    
+/* Global reset */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Horizontal scroll ko rokne ke liye */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Main container ko full width dena */
+.container {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+    /* ðŸ”¹ Full screen background image */
+    .hero{
+      position:relative;
+      height: 100vh;
+      width: 100%;
+      
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      
+    }
+    .hero img{
+object-fit: cover;
+    object-position: center 30%; /* horizontal center, vertical 30% */
+    position: absolute;
+    top: 0;
+    left: 0;
+      width:100%;
+      height:auto;
+      position:absolute;
+}
+
+    /* ðŸ”¹ Overlay for text */
+    .overlay{
+      position: absolute;
+      bottom:60px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      text-align: center;
+    }
+
+    .overlay h1{
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.7);
+    }
+
+    /* ðŸ”¹ Button */
+    .overlay button{
+      padding: 12px 28px;
+      font-size: 16px;
+      font-weight: bold;
+      border:1px solid white;
+      border-radius: 25px;
+      background: linear-gradient(to left, orange -14%,pink 68%);
+      color:white;
+      cursor: pointer;
+      transition: 0.3s;
+      animation:subbtnanim  3s infinite;
+    }
+
+    .overlay button:hover {
+      background: #f1c40f;
+      color: black;
+    }
+    
+    
+    @keyframes pulseShadow {
+    0% {
+      box-shadow: 0 0 10px #ff6600, 0 0 20px #ff6600, 0 0 30px #ff6600;
+    }
+    50% {
+      box-shadow: 0 0 20px #ff9900, 0 0 30px #ff9900, 0 0 40px #ff9900;
+    }
+    100% {
+      box-shadow: 0 0 10px #ff6600, 0 0 20px #ff6600, 0 0 30px #ff6600;
+    }
+  }
+  
+  
+  .create-imgedit-button1{
+position: relative;
+height:40px;
+width:150px;
+background: linear-gradient(to left, orange -14%,pink 68%);
+  outline:none;
+  border:0.1px solid white;
+  padding:8px;
+  border-radius:50px 50px 50px 50px;
+  transition:0.5s;
+  color: black;
+  display:block;
+  box-shadow:6px 6px 10px -1px  rgba(0,0,0,0.15),
+-6px -6px 10px -1px  rgba(255,255,255,0.0);
+      transition:1s;
+animation:subbtnanim  3s infinite;
+}
+@keyframes subbtnanim{
+
+  0%{
+    -moz-box-shadow: 0 0 0 0 rgba(0,0,0, 0.4);
+    box-shadow: 0 0 0 0 rgba(0,0,0, 0.4);
+    
+  }
+  70% {
+      -moz-box-shadow: 0 0 0 10px rgba(255, 165, 0, 0);
+      box-shadow: 0 0 0 10px rgba(0,0,255, 0);
+  }
+  100% {
+      -moz-box-shadow: 0 0 0 0 rgba(255, 165, 0, 0);
+      box-shadow: 0 0 0 0 rgba(0,0,255, 0);
+  fortransm:scale(1);}}
+
+  </style>
+</head>
+<body>
+    <div class="hero">
+  	<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi5ajVuCqhiOMkS1Y24LOJbFvDI5oKVIWSIszuv2ln9bbMa22ok4Hyx5tej5e_gB-1e8ED18g1lJfGEYzVh8k7GawHZsFsOKg-7MS_hTdFk1oA_bkSaAq-aAZXsNfTipxf4Y686NLIIgxn_acoGHaiqXZvvyZbR2kFkgQsnJdaRl_51TuP2dhVQPx9V0ZE/s1600/Banner-copypromt_20250921_110520_0000.jpg">
+    <div class="overlay">
+      <h1>COPY PROMPT IDEAS INSTANTLY!</h1>
+      <button id="openChromeBtn">OEPN IN APP<span id="shareCount" style="display:none;">0</span></button>
+    </div>
+    </div>
+<div id="heroSection" style="display:none;">
+  <!-- Hero image + overlay + install button yaha -->
+</div>
+
+
+
+<script>
+document.getElementById('openChromeBtn').addEventListener('click', function() {
+    // URL jise Chrome me kholna hai
+    var url = "https://eloanwarehouse.blogspot.com/p/google-gemini-prompt.html";
+
+    // Android ke liye intent URL
+    var chromeIntent = "intent://" + url.replace(/^https?:\/\//,'') + "#Intent;package=com.android.chrome;scheme=https;end";
+
+    // Try open Chrome
+    window.location = chromeIntent;
+
+    // Agar fail ho jaye to alert
+    setTimeout(function() {
+        alert("Open in Chrome app .");
+    }, 100000);
+});
+</script>
+
+
+
+<!-- capture count button start  -->
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+
+
+<script>
+
+  const firebaseConfig = {
+
+    apiKey: "AIzaSyCvS35O-TEWh7YBA28sXa1VEzozwOYR6Y4",
+
+    authDomain: "todaylite-github-share.firebaseapp.com",
+
+    databaseURL: "https://todaylite-github-share-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+    projectId: "todaylite-github-share",
+
+    storageBucket: "todaylite-github-share.firebasestorage.app",
+
+    messagingSenderId: "149613187050",
+
+    appId: "1:149613187050:web:87e2e35d4e76924ceaac93",
+
+    measurementId: "G-KD18PK3VBZ"
+
+  };
+
+  firebase.initializeApp(firebaseConfig);
+
+  const db = firebase.database();
+
+  // Unique article id based on URL path
+
+  const articleId = window.location.pathname
+
+    .replace(/\//g, "-")
+
+    .substring(1)
+
+    .replace(/\.[^/.]+$/, "") || "default-article";
+
+  console.log("Article ID:", articleId);
+
+  const shareCountRef = db.ref("shares/" + articleId);
+
+  shareCountRef.on("value", snapshot => {
+
+    const count = snapshot.val() || 0;
+
+    document.getElementById("shareCount").textContent = count;
+
+  });
+
+  document.getElementById("openChromeBtn").addEventListener("click", () => {
+
+    shareCountRef.transaction(current => (current || 0) + 1);
+
+  });
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</body>
+</html>
